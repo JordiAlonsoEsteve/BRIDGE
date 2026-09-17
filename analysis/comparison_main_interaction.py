@@ -1,7 +1,6 @@
 import os
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import seaborn as sns
 
@@ -174,7 +173,7 @@ def generate_metrics_comparison(
             }
 
             # Calculate differences for key metrics (e.g., Pearson, R2, RMSE)
-            for metric in full_metrics.keys():
+            for metric in full_metrics:
                 val_full = full_metrics[metric]
                 val_main = main_metrics[metric]
 
@@ -224,7 +223,6 @@ def print_metric_highlights(comparison_df: pd.DataFrame, metric_name: str = "Pea
 
 if __name__ == "__main__":
     from bridge.training.train_bsr import DATASET_CONFIGS
-    import pdb; pdb.set_trace()
     treatments_pretty_names = {
         "PTI_TPM": "PTI (TPM)",
         "all_hormone_TPM": "Hormone (TPM)",
