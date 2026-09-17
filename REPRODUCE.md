@@ -160,11 +160,19 @@ python preprocessing_scripts/process_TCGA.py
 ```
 
 ### Regulation data download and processing
+We need putative TFs for each species; For arabidopsis we find those here: For human here:
+
+### Gene families
+We need the protein sequences of the genes, which we will use to construct a graph to make clusters which will be used as families.
 
 ## Training
-
-### Run hyperparameter tuning and training
-
-## Plotting
+With all this we can now run the following script to do hyperparameter tuning and the inference. 
+```bash
+```
+Once that completed, we should have the predictive performance results and the optimal $\Theta$ (among other things). These computed results can be found at ... 
+With that, is just a matter of running the TOMTOM and plotting
 
 ### Reproduce figures & tables
+To generate the figures and tables we run
+```bash
+```
