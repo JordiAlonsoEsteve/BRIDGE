@@ -4,7 +4,8 @@ While most of the datasets can be comfortably used on a standard laptop with a G
 considerable VRAM > 7Gb. Furthermore, to get good reproducible results running FISTA at float64 is required (as done in the mansucript).
 This is considerably slower in standard hardware. We used H100, which deals with double precision pretty okay.
 
-Furthermore, pre-processing of TabulaSapiens into pseudo-counts will also require considerable ammount of RAM >40Gb (or modifying the scripts provided here).
+Pre-processing of TabulaSapiens into pseudo-counts will also require considerable ammount of RAM >40Gb (or modifying the scripts provided here).
+
 
 ## Data processing
 In this step we make the .fasta, .gff and the RNA-seq data ready for the math. We want to create a folder for each annotation, where the .fasta, .gff, the .txt of putative TFs and, optionally, the gene families in .csv format (for the family aware splitting).
@@ -29,10 +30,7 @@ wget -O data/raw/dna_tair10/TAIR10_GFF3_genes.gff https://www.arabidopsis.org/ap
 wget -O data/raw/dna_araport11/Araport11_GFF3_genes_transposons.20250813.gff.gz https://www.arabidopsis.org/api/download-files/download?filePath=Genes/Araport11_genome_release/Araport11_GFF3_genes_transposons.20250813.gff.gz
 gunzip data/raw/dna_araport11/Araport11_GFF3_genes_transposons.20250813.gff.gz
 ```
-Generate the exon count per gene to be used later for TPM normalization. We only need it for tair10:
-```bash
-python preprocessing_scripts/gene_lengths.py
-```
+
 #### Human
 Generate the folder:
 
@@ -83,24 +81,85 @@ rm data/raw/dna_human38/gencode.v38.annotation.gff3
 ```
 Great! DNA side is ready!
 
+Generate the exon count per gene to be used later for TPM normalization. 
+```bash
+python preprocessing_scripts/gene_lengths.py
+```
+
 ### RNA-seq donwload and processing
 We have 7 datasets, each with its own particularities. Let's start with Arabidopsis.
 #### *Arabidopsis thaliana*
+
 ##### Hormone data
 ?????????
+
 ##### PTI data
 ```bash
 mkdir -p data/raw/rna_seq_ath/PTI
+mkdir -p data/processed/mRNA/ath/
 wget -O data/raw/rna_seq_ath/PTI/PRJEB25079_UncorrectedCounts.csv https://ftp.ebi.ac.uk/biostudies/fire/E-MTAB-/694/E-MTAB-9694/Files/PRJEB25079_UncorrectedCounts.csv
+python preprocessing_scripts/process_PTI.py
 ```
-##### Leaf SC data
+With this we have available the log(TPM) and log2FC normalizations.
 
+##### Leaf SC data
+```bash
+mkdir data/raw/rna_seq_ath/leaf
+wget -O data/raw/rna_seq_ath/leaf/leaf.expression-matrix-raw.txt.gz https://www.zmbp-resources.uni-tuebingen.de/timmermans/PSCB3_leaf/leaf.expression-matrix-raw.txt.gz
+gunzip data/raw/rna_seq_ath/leaf/leaf.expression-matrix-raw.txt.gz
+python preprocessing_scripts/process_SC_leaf_ath.py
+```
+The last python scripts converts it to clean log(CPTT) counts.
 ##### SN Hormone data
+```bash
+mkdir data/raw/rna_seq_ath/SN_hormone
+```
+Download the data from http://119.45.35.29:14545/ into that folder and run
+
+```bash
+python preprocessing_scripts/process_SN_hormone_pseudobulk.py
+```
+which constructs the log(CPTT) and log2FC datasets.
+
 
 #### Human
+##### SC Tabula Sapiens
+Careful! 42GB! You will need a lot of RAM to execute that python script!
+```bash
+mkdir -p data/raw/rna_seq_human/TabulaSapiens
+mkdir -p data/processed/mRNA/human/
+wget -O data/raw/rna_seq_human/TabulaSapiens/5a495302-b7cd-4bf9-853e-95627b00bb03.h5ad https://datasets.cellxgene.cziscience.com/1c88f927-bcbb-4bb1-9881-281842945a2d.h5ad
+python preprocessing_scripts/process_TS.py
+```
+This yields the log(CPTT) pseudo-bulk .csv for Tabula Sapiens.
 
+##### GTEx
+```bash
+mkdir data/raw/rna_seq_human/GTEx
+wget -O data/raw/rna_seq_human/GTEx/GTEx.gct https://storage.googleapis.com/adult-gtex/bulk-gex/v11/rna-seq/GTEx_Analysis_2026-05-19_v11_RNASeQCv2.4.3_gene_tpm.gct.gz
+python preprocessing_scripts/process_GTEx.py
+```
+Yields log(TPM) GTEx
+##### PBMC
+```bash
+mkdir data/raw/rna_seq_human/PMBC
+wget -O data/raw/rna_seq_human/PMBC/filtered_feature_bc_matrix.tar.gz https://cf.10xgenomics.com/samples/cell-exp/4.0.0/SC3_v3_NextGem_SI_PBMC_10K/SC3_v3_NextGem_SI_PBMC_10K_filtered_feature_bc_matrix.tar.gz
+tar -xzf data/raw/rna_seq_human/PMBC/filtered_feature_bc_matrix.tar.gz -C  data/raw/rna_seq_human/PMBC/
+rm data/raw/rna_seq_human/PMBC/filtered_feature_bc_matrix.tar.gz
+python preprocessing_scripts/process_PBMC.py
+```
+This yields log(CPTT)
 
-### Gene regulation data download and processing
+##### TCGA
+```bash
+mkdir data/raw/rna_seq_human/TCGA
+wget -O data/raw/rna_seq_human/TCGA/tcga_RSEM_gene_log2_tpm+0.001.csv.gz https://toil-xena-hub.s3.us-east-1.amazonaws.com/download/tcga_RSEM_gene_tpm.gz
+gunzip data/raw/rna_seq_human/TCGA/tcga_RSEM_gene_log2_tpm+0.001.csv.gz
+python preprocessing_scripts/process_TCGA.py
+
+```
+
+### Regulation data download and processing
 
 ## Training
 
