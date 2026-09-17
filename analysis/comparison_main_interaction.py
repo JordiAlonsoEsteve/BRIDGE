@@ -10,7 +10,7 @@ def plot_r2_metrics_comparison_1x3(
     save_path: str = "results/r2_metrics_comparison_plot_1x3.png",
 ):
     """Generates a 1x3 horizontal grouped bar plot comparing Full Model vs. Main-Effects-Only
-    
+
     specifically for the R^2 metric across Overall, Per-Gene, and Per-Sample levels.
     """
     if comparison_df.empty:
@@ -46,7 +46,10 @@ def plot_r2_metrics_comparison_1x3(
         main_col = f"{base_col}_MainOnly"
 
         # Check if columns exist; skip subplot if missing
-        if main_col not in comparison_df.columns or full_col not in comparison_df.columns:
+        if (
+            main_col not in comparison_df.columns
+            or full_col not in comparison_df.columns
+        ):
             print(f"Warning: Missing columns for {base_col}. Skipping.")
             continue
 
@@ -113,6 +116,7 @@ def plot_r2_metrics_comparison_1x3(
         print(f"Saved R2 metrics comparison plot to: {save_path}")
 
     return fig, axes
+
 
 def generate_metrics_comparison(
     dataset_configs: list[dict],
@@ -194,12 +198,15 @@ def generate_metrics_comparison(
     comparison_df = pd.DataFrame(records)
 
     if not comparison_df.empty:
-        summary_path = os.path.join(base_results_dir, f"metrics_comparison_summary{suffix}.csv")
+        summary_path = os.path.join(
+            base_results_dir, f"metrics_comparison_summary{suffix}.csv"
+        )
         os.makedirs(base_results_dir, exist_ok=True)
         comparison_df.to_csv(summary_path, index=False)
         print(f"\nComparison completed successfully! Saved summary to: {summary_path}")
 
     return comparison_df
+
 
 def print_metric_highlights(comparison_df: pd.DataFrame, metric_name: str = "Pearson"):
     """Prints a clear summary highlighting performance differences for a target metric."""
@@ -223,6 +230,7 @@ def print_metric_highlights(comparison_df: pd.DataFrame, metric_name: str = "Pea
 
 if __name__ == "__main__":
     from bridge.training.train_bsr import DATASET_CONFIGS
+
     treatments_pretty_names = {
         "PTI_TPM": "PTI (TPM)",
         "all_hormone_TPM": "Hormone (TPM)",
@@ -238,16 +246,22 @@ if __name__ == "__main__":
     }
 
     df_comp = generate_metrics_comparison(DATASET_CONFIGS)
-    df_comp["Dataset"] = df_comp["Dataset"].map(treatments_pretty_names).fillna(df_comp["Dataset"])
+    df_comp["Dataset"] = (
+        df_comp["Dataset"].map(treatments_pretty_names).fillna(df_comp["Dataset"])
+    )
     # keep the original order of datasets as in treatments_pretty_names
-    df_comp["Dataset"] = pd.Categorical(df_comp["Dataset"], categories=treatments_pretty_names.values(), ordered=True)
+    df_comp["Dataset"] = pd.Categorical(
+        df_comp["Dataset"], categories=treatments_pretty_names.values(), ordered=True
+    )
     df_comp = df_comp.sort_values("Dataset")
     # dataset TabulaSapiens has to be TabulaSapiens_CPTT
-    df_comp["Dataset"] = df_comp["Dataset"].replace({"TabulaSapiens": "TabulaSapiens_CPTT"})
+    df_comp["Dataset"] = df_comp["Dataset"].replace(
+        {"TabulaSapiens": "TabulaSapiens_CPTT"}
+    )
     df_comp["Dataset"] = df_comp["Dataset"].replace({"GTX": "GTX_TPM"})
     df_comp["Dataset"] = df_comp["Dataset"].replace({"TCGA": "TCGA_TPM"})
 
-    #print_metric_highlights(df_comp, metric_name="Pearson")
+    # print_metric_highlights(df_comp, metric_name="Pearson")
     print_metric_highlights(df_comp, metric_name="R2")
 
     plot_r2_metrics_comparison_1x3(

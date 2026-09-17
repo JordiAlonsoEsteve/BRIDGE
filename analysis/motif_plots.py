@@ -8,18 +8,19 @@ import pandas as pd
 from tqdm import tqdm
 
 treatments_pretty_names = {
-        "PTI_TPM": "PTI (TPM)",
-        "all_hormone_TPM": "Hormone (TPM)",
-        "leaf_CPTT": "Leaf (CPTT)",
-        "PTI_log2FC": r"PTI ($\log_2$FC)",
-        "all_hormone_log2FC": r"Hormone ($\log_2$FC)",
-        "PB_snRNA_hormone_log2FC": r"SN Hormone ($\log_2$FC)",
-        "PB_snRNA_hormone_CPTT": "SN Hormone (CPTT)",
-        "GTX": "GTEx (TPM)",
-        "TabulaSapiens": "Tabula Sapiens (CPTT)",
-        "PMBC_CPTT": "PBMC (CPTT)",
-        "TCGA": "TCGA (TPM)",
+    "PTI_TPM": "PTI (TPM)",
+    "all_hormone_TPM": "Hormone (TPM)",
+    "leaf_CPTT": "Leaf (CPTT)",
+    "PTI_log2FC": r"PTI ($\log_2$FC)",
+    "all_hormone_log2FC": r"Hormone ($\log_2$FC)",
+    "PB_snRNA_hormone_log2FC": r"SN Hormone ($\log_2$FC)",
+    "PB_snRNA_hormone_CPTT": "SN Hormone (CPTT)",
+    "GTX": "GTEx (TPM)",
+    "TabulaSapiens": "Tabula Sapiens (CPTT)",
+    "PMBC_CPTT": "PBMC (CPTT)",
+    "TCGA": "TCGA (TPM)",
 }
+
 
 def parse_motif_df_from_meme(meme_file, motif_id):
     """Parses letter probability matrix for a specific motif ID from a MEME file."""
@@ -60,12 +61,14 @@ def parse_motif_df_from_meme(meme_file, motif_id):
     cols = ["A", "C", "G", "T"] if len(matrix_data[0]) == 4 else None
     return pd.DataFrame(matrix_data, columns=cols)
 
+
 def reverse_complement_pwm(df):
     """Reverse complements a PWM DataFrame with columns A, C, G, T."""
     rc = df.iloc[::-1].reset_index(drop=True)
     rc = rc[["T", "G", "C", "A"]]
     rc.columns = ["A", "C", "G", "T"]
     return rc
+
 
 def counts_to_info(df):
     """Standardizes PWM probabilities to Information Content (bits)."""
@@ -75,15 +78,16 @@ def counts_to_info(df):
     info_content = 2 - entropy
     return prob_df.multiply(info_content, axis=0)
 
-def export_single_motif_pair(t_df, t_name, q_df, q_name, output_filename, pvalue, dataset):
+
+def export_single_motif_pair(
+    t_df, t_name, q_df, q_name, output_filename, pvalue, dataset
+):
     """Exports a single pair of motifs (Target vs Query) as a vector PDF."""
     # 1. Bump height slightly to 1.6 to fit both top title and bottom labels comfortably
     _fig, axes = plt.subplots(1, 2, figsize=(6, 1.6), sharey=True)
 
     # Target Motif (Experimental / Database)
-    logo_t = logomaker.Logo(
-        counts_to_info(t_df), ax=axes[0], color_scheme="classic"
-    )
+    logo_t = logomaker.Logo(counts_to_info(t_df), ax=axes[0], color_scheme="classic")
     logo_t.style_spines(visible=False)
     axes[0].spines["bottom"].set_visible(True)
     axes[0].spines["left"].set_visible(True)
@@ -91,9 +95,7 @@ def export_single_motif_pair(t_df, t_name, q_df, q_name, output_filename, pvalue
     axes[0].set_yticks([0, 1, 2])
 
     # Query Motif (Inferred)
-    logo_q = logomaker.Logo(
-        counts_to_info(q_df), ax=axes[1], color_scheme="classic"
-    )
+    logo_q = logomaker.Logo(counts_to_info(q_df), ax=axes[1], color_scheme="classic")
     logo_q.style_spines(visible=False)
     axes[1].spines["bottom"].set_visible(True)
     axes[1].spines["left"].set_visible(False)
@@ -107,18 +109,23 @@ def export_single_motif_pair(t_df, t_name, q_df, q_name, output_filename, pvalue
 
     # 2. Add motif names as x-axis labels below each plot
     axes[0].set_xlabel(t_name, fontsize=12, labelpad=6)
-    axes[1].set_xlabel("BRIDGE-" +  q_name, fontsize=12, labelpad=6)
+    axes[1].set_xlabel("BRIDGE-" + q_name, fontsize=12, labelpad=6)
 
     # 3. Adjust top/bottom margins so neither the title nor the bottom labels are clipped
     plt.subplots_adjust(wspace=0.1, top=0.72, bottom=0.28)
 
     # Explicitly place suptitle above the top edge
-    plt.suptitle(f"{treatments_pretty_names[dataset]} | adj. p-value: {pvalue:.2e}", fontsize=12, y=0.85)
+    plt.suptitle(
+        f"{treatments_pretty_names[dataset]} | adj. p-value: {pvalue:.2e}",
+        fontsize=12,
+        y=0.85,
+    )
 
     plt.savefig(
         output_filename, format="pdf", bbox_inches="tight", transparent=True, dpi=300
     )
     plt.close()
+
 
 def get_top_n_matches(
     tomtom_df: pd.DataFrame, n: int = 5, match_mode: str = "all"
@@ -139,9 +146,7 @@ def get_top_n_matches(
     if match_mode == "exact":
         # Compare mapped Gene/Locus IDs if available, fall back to raw IDs
         q_col = "Query_Gene_ID" if "Query_Gene_ID" in df.columns else "Query_ID"
-        t_col = (
-            "Target_Gene_ID" if "Target_Gene_ID" in df.columns else "Target_ID"
-        )
+        t_col = "Target_Gene_ID" if "Target_Gene_ID" in df.columns else "Target_ID"
         df = df[df[q_col] == df[t_col]]
 
     elif match_mode == "family":
@@ -164,14 +169,15 @@ def get_top_n_matches(
     df_sorted = df.sort_values(by="p-value", ascending=True)
     return df_sorted.head(n)
 
+
 def get_most_important_matches(
-    tomtom_df: pd.DataFrame, 
-    importances: pd.DataFrame, 
+    tomtom_df: pd.DataFrame,
+    importances: pd.DataFrame,
     n: int = 5,
-    gene_mapping: dict | None = None
+    gene_mapping: dict | None = None,
 ) -> pd.DataFrame:
     """
-    Returns the most important motifs/TFs (max importance score per TF) and 
+    Returns the most important motifs/TFs (max importance score per TF) and
     indicates whether an exact match exists in the target JASPAR database.
     """
     df_imp = importances.copy()
@@ -190,10 +196,16 @@ def get_most_important_matches(
         .sort_values(by="Importance", ascending=False)
     )
     if gene_mapping:
-        tf_importance["Gene"] = tf_importance["Gene"].map(gene_mapping).fillna(tf_importance["Gene"])
-    
-    tomtom_df["Query_Gene_ID"] = tomtom_df["Query_Gene_ID"].str.upper()  # Ensure consistent casing for merging
-    tomtom_df["Target_Gene_ID"] = tomtom_df["Target_Gene_ID"].str.upper()  # Ensure consistent casing for merging
+        tf_importance["Gene"] = (
+            tf_importance["Gene"].map(gene_mapping).fillna(tf_importance["Gene"])
+        )
+
+    tomtom_df["Query_Gene_ID"] = tomtom_df[
+        "Query_Gene_ID"
+    ].str.upper()  # Ensure consistent casing for merging
+    tomtom_df["Target_Gene_ID"] = tomtom_df[
+        "Target_Gene_ID"
+    ].str.upper()  # Ensure consistent casing for merging
 
     df_genes = set(tf_importance["Gene"].unique())
     tomtom_genes = set(tomtom_df["Query_Gene_ID"].dropna().unique())
@@ -202,7 +214,7 @@ def get_most_important_matches(
     # 3. Identify exact matches present in TOMTOM results (Query == Target)
     q_col = "Query_Gene_ID" if "Query_Gene_ID" in tomtom_df.columns else "Query_ID"
     t_col = "Target_Gene_ID" if "Target_Gene_ID" in tomtom_df.columns else "Target_ID"
-    #t_name_col = "Target_Name" if "Target_Name" in tomtom_df.columns else t_col
+    # t_name_col = "Target_Name" if "Target_Name" in tomtom_df.columns else t_col
 
     # Set of TFs that have an exact database match in JASPAR
     exact_matches = tomtom_df[tomtom_df[q_col] == tomtom_df[t_col]]
@@ -211,18 +223,18 @@ def get_most_important_matches(
     # Get lowest p-value TOMTOM match for each query motif (if available)
     sort_cols = [col for col in ["p-value", "q-value"] if col in tomtom_df.columns]
     if sort_cols:
-        best_tomtom = tomtom_df.sort_values(by=sort_cols[0], ascending=True).groupby(q_col, as_index=False).first()
+        best_tomtom = (
+            tomtom_df.sort_values(by=sort_cols[0], ascending=True)
+            .groupby(q_col, as_index=False)
+            .first()
+        )
     else:
         best_tomtom = tomtom_df.groupby(q_col, as_index=False).first()
-    
+
     # 4. Merge importance ranking with TOMTOM matching info
-    #cols_to_keep = [q_col, t_name_col] + sort_cols
+    # cols_to_keep = [q_col, t_name_col] + sort_cols
     merged = pd.merge(
-        tf_importance,
-        best_tomtom,
-        left_on="Gene",
-        right_on="Query_Gene_ID",
-        how="left"
+        tf_importance, best_tomtom, left_on="Gene", right_on="Query_Gene_ID", how="left"
     )
     # remove elements not in my_set, i.e. those that are not in the intersection of the two sets
     merged = merged[merged["Gene"].isin(my_set)].copy()
@@ -232,11 +244,12 @@ def get_most_important_matches(
     # rename q-value to p-value_BF
     merged.rename(columns={"q-value": "p-value_BF"}, inplace=True)
     # Clean up column layout
-    #output_cols = ["Gene", "Importance", "in_jaspar_db", "is_novel_candidate", t_name_col] + sort_cols
-    #existing_output_cols = [c for c in output_cols if c in merged.columns]
+    # output_cols = ["Gene", "Importance", "in_jaspar_db", "is_novel_candidate", t_name_col] + sort_cols
+    # existing_output_cols = [c for c in output_cols if c in merged.columns]
     # remove the ones that are in JASPAR
     merged = merged[~merged["in_jaspar_db"]].copy()
     return merged.sort_values(by="Importance", ascending=False).head(n)
+
 
 if __name__ == "__main__":
     # Define dataset structure
@@ -290,7 +303,7 @@ if __name__ == "__main__":
             if os.path.exists(output_folder):
                 shutil.rmtree(output_folder)
             os.makedirs(output_folder, exist_ok=True)
-            
+
             metadata_records = []
 
             # Category Loop: overall, exact, family, important
@@ -301,21 +314,27 @@ if __name__ == "__main__":
                 # Route query matching strategy based on category
                 if cat_name == "important":
                     if not os.path.exists(importance_path):
-                        print(f"  Skipping category [{cat_name}]: {importance_path} not found.")
+                        print(
+                            f"  Skipping category [{cat_name}]: {importance_path} not found."
+                        )
                         continue
                     imp_df = pd.read_csv(importance_path)
                     if species == "human":
-                        mapping = pd.read_csv("data/processed/regulation/human/Human_id_mapping.csv")
+                        mapping = pd.read_csv(
+                            "data/processed/regulation/human/Human_id_mapping.csv"
+                        )
                         # generate a dict of Gene_id:symbol
                         gene_mapping = dict(zip(mapping["Gene_id"], mapping["symbol"]))
                     top_matches = get_most_important_matches(
-                        tomtom_df, imp_df, n=n_matches, gene_mapping=gene_mapping if species == "human" else None
+                        tomtom_df,
+                        imp_df,
+                        n=n_matches,
+                        gene_mapping=gene_mapping if species == "human" else None,
                     )
                 else:
                     top_matches = get_top_n_matches(
                         tomtom_df, n=n_matches, match_mode=cat_name
                     )
-                   
 
                 # Use tqdm to track logo rendering and export per category
                 pbar = tqdm(
@@ -353,8 +372,16 @@ if __name__ == "__main__":
                     is_novel = row.get("is_novel_candidate", np.nan)
 
                     # Parse matrices
-                    t_df = parse_motif_df_from_meme(target_meme_path, t_id) if pd.notna(t_id) else None
-                    q_df = parse_motif_df_from_meme(query_meme_path, q_id) if pd.notna(q_id) else None
+                    t_df = (
+                        parse_motif_df_from_meme(target_meme_path, t_id)
+                        if pd.notna(t_id)
+                        else None
+                    )
+                    q_df = (
+                        parse_motif_df_from_meme(query_meme_path, q_id)
+                        if pd.notna(q_id)
+                        else None
+                    )
 
                     pdf_filename = None
                     if t_df is not None and q_df is not None:
@@ -370,29 +397,37 @@ if __name__ == "__main__":
 
                         # Export individual PDF logo pair
                         export_single_motif_pair(
-                            t_df, t_name, q_df, q_name, output_filepath, p_val_bf, dataset=treatment
+                            t_df,
+                            t_name,
+                            q_df,
+                            q_name,
+                            output_filepath,
+                            p_val_bf,
+                            dataset=treatment,
                         )
 
                     # Log metadata regardless of alignment status
-                    metadata_records.append({
-                        "Category": cat_name,
-                        "Rank": rank,
-                        "Target_Name": t_name,
-                        "Target_ID": t_id,
-                        "Target_Gene_ID": t_gene,
-                        "Query_Name": q_name,
-                        "Query_ID": q_id,
-                        "Query_Gene_ID": q_gene,
-                        "Importance": importance_score,
-                        "In_JASPAR_DB": in_db,
-                        "Is_Novel_Candidate": is_novel,
-                        "Orientation": orientation,
-                        "p-value": p_val,
-                        "p-value_BF": p_val_bf,
-                        "Subset_Size": subset_size,
-                        "q-value": q_val,
-                        "PDF_Filename": pdf_filename,
-                    })
+                    metadata_records.append(
+                        {
+                            "Category": cat_name,
+                            "Rank": rank,
+                            "Target_Name": t_name,
+                            "Target_ID": t_id,
+                            "Target_Gene_ID": t_gene,
+                            "Query_Name": q_name,
+                            "Query_ID": q_id,
+                            "Query_Gene_ID": q_gene,
+                            "Importance": importance_score,
+                            "In_JASPAR_DB": in_db,
+                            "Is_Novel_Candidate": is_novel,
+                            "Orientation": orientation,
+                            "p-value": p_val,
+                            "p-value_BF": p_val_bf,
+                            "Subset_Size": subset_size,
+                            "q-value": q_val,
+                            "PDF_Filename": pdf_filename,
+                        }
+                    )
 
             # Save metadata summary CSV per treatment
             if metadata_records:

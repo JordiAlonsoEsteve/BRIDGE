@@ -3,8 +3,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from bridge.data_loading.load_mrna import load_processed_dataset
 from bridge.kmer_processing.get_formated_dna import get_dna_kmer_representation
-from BRIDGE.src.bridge.data_loading.load_mrna import load_processed_dataset
 
 
 def generate_data(

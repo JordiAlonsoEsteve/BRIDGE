@@ -45,7 +45,7 @@ def extract_dataset_metrics(base_dir, treatment):
 
     sparsity = (theta == 0).mean().mean()
     sparsity_str = rf"{sparsity * 100:.2f}\%" if sparsity <= 1.0 else f"{sparsity:.2f}"
-    
+
     return {
         "Species": "Ath" if base_dir == "Ath" else "Human",
         "Samples": round(D.shape[1]),
@@ -53,20 +53,28 @@ def extract_dataset_metrics(base_dir, treatment):
         "TFs": theta.shape[1],
         "Sparsity": sparsity_str,
         "Active TFs": int((theta.values[1:, 1:] != 0).any(axis=0).sum()),
-        "Active Motifs": int((theta.values[1:, 1:]!= 0).any(axis=1).sum()),
+        "Active Motifs": int((theta.values[1:, 1:] != 0).any(axis=1).sum()),
         "Active intercepts TFs": int((theta.values[0, 1:] != 0).sum()),
         "Active intercepts Motifs": int((theta.values[1:, 0] != 0).sum()),
-
-        
     }
 
 
 def generate_summary_table():
     # Define the datasets and their corresponding base directories
     experiments = [
-        ("Ath", ["PTI_TPM", "all_hormone_TPM", "leaf_CPTT", "PTI_log2FC", "all_hormone_log2FC", "PB_snRNA_hormone_log2FC", \
-"PB_snRNA_hormone_CPTT"]),
-        ("human", ["GTX", "TabulaSapiens", "PMBC_CPTT", "TCGA"])
+        (
+            "Ath",
+            [
+                "PTI_TPM",
+                "all_hormone_TPM",
+                "leaf_CPTT",
+                "PTI_log2FC",
+                "all_hormone_log2FC",
+                "PB_snRNA_hormone_log2FC",
+                "PB_snRNA_hormone_CPTT",
+            ],
+        ),
+        ("human", ["GTX", "TabulaSapiens", "PMBC_CPTT", "TCGA"]),
     ]
 
     table_rows = []

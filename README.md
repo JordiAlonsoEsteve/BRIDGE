@@ -8,7 +8,7 @@ Transcription factors (TFs) regulate gene expression by binding specific DNA seq
 
 BRIDGE unifies both into a single convex optimization problem. It factorizes gene expression as an explicit interaction between promoter k-mers (cis) and TF abundance (trans), recovering both regulatory network structure and de novo TF binding motifs (TFBMs) from the same model — with a guaranteed unique global optimum.
 
-Because it only needs RNA-seq, a genome (FASTA), and an annotation (GFF) — data you likely already have if you're doing transcriptomics — BRIDGE effectively acts as an in silico Protein Binding Microarray, TFBMs without prior motif libraries or additional wet-lab assays.
+Because it only needs RNA-seq, a genome (FASTA), and an annotation (GFF) — data you likely already have if you're doing transcriptomics — BRIDGE effectively acts as an *in silico* Protein Binding Microarray, TFBMs without prior motif libraries or additional wet-lab assays.
 
 ## Installation
 
