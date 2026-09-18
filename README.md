@@ -8,7 +8,7 @@ Transcription factors (TFs) regulate gene expression by binding specific DNA seq
 
 BRIDGE unifies both into a single convex optimization problem. It factorizes gene expression as an explicit interaction between promoter k-mers (cis) and TF abundance (trans), recovering both regulatory network structure and de novo TF binding motifs (TFBMs) from the same model — with a guaranteed unique global optimum.
 
-Because it only needs RNA-seq, a genome (FASTA), and an annotation (GFF) — data you likely already have if you're doing transcriptomics — BRIDGE effectively acts as an *in silico* Protein Binding Microarray, TFBMs without prior motif libraries or additional wet-lab assays.
+Because it only needs RNA-seq, a genome (FASTA), and an annotation (GFF) — data you likely already have if you're doing transcriptomics — BRIDGE effectively acts as an *in silico* Protein Binding Microarray, inferring TF-specific TFBMs without prior motif libraries or additional wet-lab assays.
 
 ## 🛠️ Installation
 
@@ -38,7 +38,7 @@ This installs the `bridge` package (from `src/bridge`) along with its dependenci
 bash demo/donwload_data.sh
 python demo/generate_XYC.py
 ```
-This generates the necessary data to use BRIDGE on a Pattern Triggerd Inmmunity dataset for *Arabidopsis Thaliana* (see https://pmc.ncbi.nlm.nih.gov/articles/PMC7610817/). This generates the required dataframes .csv in the demo folder; 
+This generates the necessary data to use BRIDGE on a Pattern Triggered Immunity (PTI) dataset for *Arabidopsis Thaliana* (see https://pmc.ncbi.nlm.nih.gov/articles/PMC7610817/). This generates the required dataframes .csv in the demo folder; 
 
 ```python
 import pandas as pd
