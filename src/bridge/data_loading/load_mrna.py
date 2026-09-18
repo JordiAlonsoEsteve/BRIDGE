@@ -7,17 +7,17 @@ BASE_DIR = Path("data/processed/mRNA")
 
 # Mapping from logical names to the CSV stem names or folder names
 CSV_MAP = {
-    "TabulaSapiens": "sc_human/TabulaSapiens_full_CPTT",
-    "GTX": "bulk_human/GTX_TPM",
-    "all_hormone_TPM": "bulk_ath/all_hormone_TPM",
-    "TCGA": "bulk_human/TCGA_TPM",
-    "PTI_TPM": "bulk_ath/PTI_TPM",
-    "PMBC_CPTT": "sc_human/PBMC_CPTT",
-    "leaf_CPTT": "sc_ath/leaf_CPTT",
-    "PTI_log2FC": "bulk_ath/PTI_log2FC",
-    "all_hormone_log2FC": "bulk_ath/all_hormone_log2FC",
-    "PB_snRNA_hormone_log2FC": "bulk_ath/PB_snRNA_hormone_log2FC",
-    "PB_snRNA_hormone_CPTT": "bulk_ath/PB_snRNA_hormone_CPTT",
+    "TabulaSapiens": "human/TabulaSapiens_CPTT",
+    "GTX": "human/GTX_TPM",
+    "all_hormone_TPM": "ath/all_hormone_TPM",
+    "TCGA": "human/TCGA_TPM",
+    "PTI_TPM": "ath/PTI_TPM",
+    "PMBC_CPTT": "human/PBMC_CPTT",
+    "leaf_CPTT": "ath/leaf_CPTT",
+    "PTI_log2FC": "ath/PTI_log2FC",
+    "all_hormone_log2FC": "ath/all_hormone_log2FC",
+    "PB_snRNA_hormone_log2FC": "ath/PB_snRNA_hormone_log2FC",
+    "PB_snRNA_hormone_CPTT": "ath/PB_snRNA_hormone_CPTT",
 }
 
 

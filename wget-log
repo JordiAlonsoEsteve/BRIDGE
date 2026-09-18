@@ -1,11 +1,0 @@
---2026-09-17 15:56:29--  https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE226097
-Resolving www.ncbi.nlm.nih.gov (www.ncbi.nlm.nih.gov)... 2600:1901:0:c831::, 34.107.134.59
-Connecting to www.ncbi.nlm.nih.gov (www.ncbi.nlm.nih.gov)|2600:1901:0:c831::|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [text/html]
-Saving to: ‘data/raw/rna_seq_ath/SN_hormone/GSE226097_global_integration_221009.rds’
-
-                       data/raw/rna_seq_ath/SN     [<=>                                                                                                 ]       0  --.-KB/s               data/raw/rna_seq_ath/SN_hormone/GSE226097_glob     [ <=>                                                                                                ]  15,14K  --.-KB/s    in 0,001s  
-
-2026-09-17 15:56:30 (11,4 MB/s) - ‘data/raw/rna_seq_ath/SN_hormone/GSE226097_global_integration_221009.rds’ saved [15500]
-

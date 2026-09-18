@@ -1,5 +1,7 @@
 # Instructions to reproduce the figures and results from scratch
 
+Make sure that you have installed the required dependencies!
+
 While most of the datasets can be comfortably used on a standard laptop with a GPU, Tabula Sapiens, GTEx and TCGA require
 considerable VRAM > 7Gb. Furthermore, to get good reproducible results running FISTA at float64 is required (as done in the mansucript).
 This is considerably slower in standard hardware. We used H100, which deals with double precision pretty okay.
@@ -156,23 +158,109 @@ mkdir data/raw/rna_seq_human/TCGA
 wget -O data/raw/rna_seq_human/TCGA/tcga_RSEM_gene_log2_tpm+0.001.csv.gz https://toil-xena-hub.s3.us-east-1.amazonaws.com/download/tcga_RSEM_gene_tpm.gz
 gunzip data/raw/rna_seq_human/TCGA/tcga_RSEM_gene_log2_tpm+0.001.csv.gz
 python preprocessing_scripts/process_TCGA.py
-
 ```
 
-### Regulation data download and processing
-We need putative TFs for each species; For arabidopsis we find those here: For human here:
+### Putative TFs
+We need putative TFs for each species; 
+For arabidopsis:
+```bash
+wget -O data/raw/dna_tair10/TF_list.txt.gz https://planttfdb.gao-lab.org/download/TF_list/Ath_TF_list.txt.gz
+gunzip data/raw/dna_tair10/TF_list.txt.gz
+cp data/raw/dna_tair10/TF_list.txt data/raw/dna_araport11/TF_list.txt
+```
 
+For human, download from https://guolab.wchscu.cn/AnimalTFDB4/#/Download and save it in data/raw/dna_human38/TF_list_raw.txt. Now, some formatting;
+
+```bash
+awk -F'\t' 'NR==1{print "TF_ID\tGene_ID\tFamily"; next} {
+  n=split($5, arr, ";");
+  delete seen;
+  for(i=1;i<=n;i++){
+    p=arr[i];
+    gsub(/^[ \t]+|[ \t]+$/,"",p);
+    if(p=="") continue;
+    if(p in seen) continue;
+    seen[p]=1;
+    print p"\t"$3"\t"$4;
+  }
+}' data/raw/dna_human38/TF_list_raw.txt > data/raw/dna_human38/TF_list.txt
+rm data/raw/dna_human38/TF_list_raw.txt
+```
 ### Gene families
-We need the protein sequences of the genes, which we will use to construct a graph to make clusters which will be used as families.
+Download the protein sequences:
+```bash
+mkdir -p data/processed/regulation/ath
+wget -O data/processed/regulation/ath/TAIR10_pep_20110103_representative_gene_model https://www.arabidopsis.org/api/download-files/download?filePath=Proteins/TAIR10_protein_lists/TAIR10_pep_20110103_representative_gene_model
+
+
+```
+```bash
+mkdir -p data/processed/regulation/human
+wget -O data/processed/regulation/human/Homo_sapiens.GRCh38.pep.all.fa.gz https://ftp.ensembl.org/pub/current_fasta/homo_sapiens/pep/Homo_sapiens.GRCh38.pep.all.fa.gz
+gunzip data/processed/regulation/human/Homo_sapiens.GRCh38.pep.all.fa.gz
+```
+Some formatting
+```bash
+awk '
+/^>/ {
+    # 1. Use match to find the gene_symbol value
+    if (match($0, /gene:([^.;]+)/, arr)) {
+        symbol = arr[1]
+    }
+
+    # 2. Check if we have already processed this gene
+    if (!seen[symbol]++) {
+        print ">" symbol
+        keep = 1
+    } else {
+        keep = 0
+    }
+    next
+}
+# 3. If keep is 1, print the sequence lines
+keep { print }
+' data/processed/regulation/human/Homo_sapiens.GRCh38.pep.all.fa > data/processed/regulation/human/my_Homo_sapiens.GRCh38.pep.all.fa
+rm data/processed/regulation/human/Homo_sapiens.GRCh38.pep.all.fa
+```
+Now run the markov clustering script for both species (copy the ath one in araport11). This can take some time.
+
+```bash
+python preprocessing_scripts/get_gene_families.py
+cp data/raw/dna_tair10/gene_families.csv data/raw/dna_araport11/gene_families.csv 
+```
+
+Missing genes here (belonging to no families) will be added when calling the data loading functions.
+
+### JASPAR databases in MEME format
+```bash
+wget -O data/processed/regulation/ath/JASPAR2026_CORE_plants_non-redundant_pfms_meme.txt https://jaspar.elixir.no/download/data/2026/CORE/JASPAR2026_CORE_plants_non-redundant_pfms_meme.txt
+
+wget -O data/processed/regulation/human/JASPAR2026_CORE_vertebrates_non-redundant_pfms_meme.txt https://jaspar.elixir.no/download/data/2026/CORE/JASPAR2026_CORE_vertebrates_non-redundant_pfms_meme.txt
+```
+And now change the naming to UniProt and generate a mapping from JASPAR to UNIPROT.
+```bash
+python preprocessing_scripts/generate_JASPAR_uniprot_file.py
+```
 
 ## Training
-With all this we can now run the following script to do hyperparameter tuning and the inference. 
+With all this we can now run the following script to do hyperparameter tuning and the inference. The following script will take care of everything and will populate the results folder.
+
 ```bash
+python src/bridge/training/train_bsr.py
 ```
-Once that completed, we should have the predictive performance results and the optimal $\Theta$ (among other things). These computed results can be found at ... 
-With that, is just a matter of running the TOMTOM and plotting
+Once that completed, we should have the predictive performance results and the optimal $\Theta$ (among other things). 
+These computed results can be found at ... 
+
 
 ### Reproduce figures & tables
-To generate the figures and tables we run
+With that, is just a matter of running the TOMTOM and plotting.
+
 ```bash
+python analysis/tomtom_analysis.py
+python analysis/QQ_plot.py
+python analysis/motif_plots.py
+python analysis/prioritization.py
+python analysis/comparison_main_interaction.py
+python analysis_scripts/tf-kmer_histograms.py
 ```
+

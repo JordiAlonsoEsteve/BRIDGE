@@ -254,7 +254,7 @@ def get_most_important_matches(
 if __name__ == "__main__":
     # Define dataset structure
     SPECIES_CONFIG = {
-        "Ath": {
+        "ath": {
             "treatments": [
                 "PTI_TPM",
                 "all_hormone_TPM",

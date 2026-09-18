@@ -3,6 +3,7 @@ import os
 import jax.numpy as jnp
 import numpy as np
 import pandas as pd
+
 from bridge.data_loading.generate_data import generate_data
 from bridge.hyperparam_tuning.hyperparameter_tuning import find_hyperparameters
 from bridge.model.bsr import BSR
@@ -27,13 +28,13 @@ DATASET_CONFIGS = [
             "all_hormone_log2FC",
         ],
         "dna_folder": "data/raw/dna_tair10",
-        "results_dir": "results/Ath",
+        "results_dir": "results/ath",
     },
     # Another arabidopsis dataset but that is mapped using Araport11 ...
     {
         "names": ["PB_snRNA_hormone_log2FC", "PB_snRNA_hormone_CPTT"],
         "dna_folder": "data/raw/dna_araport11",
-        "results_dir": "results/Ath",
+        "results_dir": "results/ath",
     },
     # Human Datasets
     {
