@@ -170,8 +170,15 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
             **best_hyper,
             dtype=jnp.float64,
         )
-        Theta = BSR_full_model.fit()
-
+        Theta = BSR_full_model.fit(monitor = True)
+        err_history = BSR_full_model.err_history
+        loss_history = BSR_full_model.loss_history
+        # save loss and error history
+        np.savez(
+            os.path.join(output_dir, "loss_error_history.npz"),
+            loss_history=loss_history,
+            err_history=err_history,
+        )
         # Save active count stats
         num_active_motifs = (Theta[1:, :] != 0).any(axis=1).sum()
         num_active_tfs = (Theta[:, 1:] != 0).any(axis=0).sum()
@@ -208,6 +215,6 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
 
 
 if __name__ == "__main__":
-    for main_effects_only in [True, False]:
+    for main_effects_only in [False, True]:
         for config in DATASET_CONFIGS:
             run_pipeline(config, main_effects_only=main_effects_only)

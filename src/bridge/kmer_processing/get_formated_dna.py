@@ -1,6 +1,7 @@
 import subprocess
 from pathlib import Path
 from typing import Literal
+import os 
 
 from bridge.dna_parsing.load_promoters import load_promoters
 from bridge.kmer_processing.k_mer_utils import generate_kmer_count_vector
@@ -45,10 +46,11 @@ def get_dna_kmer_representation(
         If True, uses strand information when generating BED files for coordinates.
     """
 
+    os.makedirs(output_folder, exist_ok=True)
     # compute k-mer representation using k
     if region in ["TSS", "TTS"]:
         cmd = [
-            "src/dna_parsing/get_dna_segment.sh",
+            "src/bridge/dna_parsing/get_dna_segment.sh",
             "-u",
             str(bp[0]),
             "-d",
@@ -64,7 +66,7 @@ def get_dna_kmer_representation(
         ]
     else:
         cmd = [
-            "src/dna_parsing/get_dna_segment.sh",
+            "src/bridge/dna_parsing/get_dna_segment.sh",
             "-g",
             "True",
             "-i",

@@ -153,7 +153,7 @@ def get_alingment(kmer_list, weights):
     return consensus_seq, ppm_matrix, coverage
 
 
-def generate_PWM_from_theta(theta, ic_threshold=10) -> dict:
+def generate_PWM_from_theta(theta, ic_threshold=10) -> tuple[dict, dict]:
     """
     Takes theta matrix (|kmers| x |TFs|), TF names and k-mer names.
     Returns dictionary with PWMs {tf_name: pd.DataFrame}

@@ -1,0 +1,294 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="642" viewBox="0 0 1100 642" role="img" aria-label="Top MEME motif sequence logos ranked by information content">
+<style>
+.logo text { font-family: Arial, Helvetica, sans-serif; }
+.axis { stroke: #888; stroke-width: 1; }
+.tick { fill: #555; font-size: 10px; }
+.title { fill: #111; font-size: 14px; font-weight: bold; }
+.meta { fill: #666; font-size: 10px; }
+.base { font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-anchor: middle; }
+.a { fill: #2ca02c; } .c { fill: #1f77b4; }
+.g { fill: #d62728; } .t { fill: #ff7f0e; }
+</style>
+<g class="logo">
+<text x="8.00" y="42.00" class="title">1. AT2G30250</text>
+<text x="356.67" y="42.00" text-anchor="end" class="meta">IC=19.6 bits</text>
+<line x1="46.00" y1="121.00" x2="356.67" y2="121.00" class="axis"/>
+<text x="38.00" y="124.00" text-anchor="end" class="tick">0</text>
+<text x="38.00" y="90.00" text-anchor="end" class="tick">1</text>
+<line x1="46.00" y1="87.00" x2="356.67" y2="87.00" class="axis" opacity=".18"/>
+<text x="38.00" y="56.00" text-anchor="end" class="tick">2</text>
+<line x1="46.00" y1="53.00" x2="356.67" y2="53.00" class="axis" opacity=".18"/>
+<text x="61.53" y="121.00" font-size="34.00" transform="translate(61.53,121.00) scale(1.269,2.000) translate(-61.53,-121.00)" class="base a">A</text>
+<text x="61.53" y="135.00" class="tick">1</text>
+<text x="92.60" y="121.00" font-size="34.00" transform="translate(92.60,121.00) scale(1.269,0.056) translate(-92.60,-121.00)" class="base g">G</text>
+<text x="92.60" y="119.09" font-size="34.00" transform="translate(92.60,119.09) scale(1.269,1.744) translate(-92.60,-119.09)" class="base a">A</text>
+<text x="92.60" y="135.00" class="tick">2</text>
+<text x="123.67" y="121.00" font-size="34.00" transform="translate(123.67,121.00) scale(1.269,0.015) translate(-123.67,-121.00)" class="base g">G</text>
+<text x="123.67" y="120.50" font-size="34.00" transform="translate(123.67,120.50) scale(1.269,1.921) translate(-123.67,-120.50)" class="base a">A</text>
+<text x="123.67" y="135.00" class="tick">3</text>
+<text x="154.73" y="121.00" font-size="34.00" transform="translate(154.73,121.00) scale(1.269,1.992) translate(-154.73,-121.00)" class="base g">G</text>
+<text x="154.73" y="135.00" class="tick">4</text>
+<text x="185.80" y="121.00" font-size="34.00" transform="translate(185.80,121.00) scale(1.269,1.992) translate(-185.80,-121.00)" class="base t">T</text>
+<text x="185.80" y="135.00" class="tick">5</text>
+<text x="216.87" y="121.00" font-size="34.00" transform="translate(216.87,121.00) scale(1.269,0.028) translate(-216.87,-121.00)" class="base g">G</text>
+<text x="216.87" y="120.03" font-size="34.00" transform="translate(216.87,120.03) scale(1.269,1.859) translate(-216.87,-120.03)" class="base c">C</text>
+<text x="216.87" y="135.00" class="tick">6</text>
+<text x="247.93" y="121.00" font-size="34.00" transform="translate(247.93,121.00) scale(1.269,1.986) translate(-247.93,-121.00)" class="base a">A</text>
+<text x="247.93" y="135.00" class="tick">7</text>
+<text x="279.00" y="121.00" font-size="34.00" transform="translate(279.00,121.00) scale(1.269,1.955) translate(-279.00,-121.00)" class="base a">A</text>
+<text x="279.00" y="135.00" class="tick">8</text>
+<text x="310.07" y="121.00" font-size="34.00" transform="translate(310.07,121.00) scale(1.269,2.000) translate(-310.07,-121.00)" class="base c">C</text>
+<text x="310.07" y="135.00" class="tick">9</text>
+<text x="341.13" y="121.00" font-size="34.00" transform="translate(341.13,121.00) scale(1.269,2.000) translate(-341.13,-121.00)" class="base g">G</text>
+<text x="341.13" y="135.00" class="tick">10</text>
+<text x="374.67" y="42.00" class="title">2. AT4G11070</text>
+<text x="723.33" y="42.00" text-anchor="end" class="meta">IC=18.4 bits</text>
+<line x1="412.67" y1="121.00" x2="723.33" y2="121.00" class="axis"/>
+<text x="404.67" y="124.00" text-anchor="end" class="tick">0</text>
+<text x="404.67" y="90.00" text-anchor="end" class="tick">1</text>
+<line x1="412.67" y1="87.00" x2="723.33" y2="87.00" class="axis" opacity=".18"/>
+<text x="404.67" y="56.00" text-anchor="end" class="tick">2</text>
+<line x1="412.67" y1="53.00" x2="723.33" y2="53.00" class="axis" opacity=".18"/>
+<text x="426.79" y="121.00" font-size="34.00" transform="translate(426.79,121.00) scale(1.154,2.000) translate(-426.79,-121.00)" class="base t">T</text>
+<text x="426.79" y="135.00" class="tick">1</text>
+<text x="455.03" y="121.00" font-size="34.00" transform="translate(455.03,121.00) scale(1.154,0.238) translate(-455.03,-121.00)" class="base t">T</text>
+<text x="455.03" y="112.91" font-size="34.00" transform="translate(455.03,112.91) scale(1.154,1.081) translate(-455.03,-112.91)" class="base g">G</text>
+<text x="455.03" y="135.00" class="tick">2</text>
+<text x="483.27" y="121.00" font-size="34.00" transform="translate(483.27,121.00) scale(1.154,0.238) translate(-483.27,-121.00)" class="base c">C</text>
+<text x="483.27" y="112.91" font-size="34.00" transform="translate(483.27,112.91) scale(1.154,1.081) translate(-483.27,-112.91)" class="base g">G</text>
+<text x="483.27" y="135.00" class="tick">3</text>
+<text x="511.52" y="121.00" font-size="34.00" transform="translate(511.52,121.00) scale(1.154,0.021) translate(-511.52,-121.00)" class="base t">T</text>
+<text x="511.52" y="120.27" font-size="34.00" transform="translate(511.52,120.27) scale(1.154,0.048) translate(-511.52,-120.27)" class="base g">G</text>
+<text x="511.52" y="118.65" font-size="34.00" transform="translate(511.52,118.65) scale(1.154,1.652) translate(-511.52,-118.65)" class="base a">A</text>
+<text x="511.52" y="135.00" class="tick">4</text>
+<text x="539.76" y="121.00" font-size="34.00" transform="translate(539.76,121.00) scale(1.154,0.024) translate(-539.76,-121.00)" class="base c">C</text>
+<text x="539.76" y="120.19" font-size="34.00" transform="translate(539.76,120.19) scale(1.154,1.880) translate(-539.76,-120.19)" class="base a">A</text>
+<text x="539.76" y="135.00" class="tick">5</text>
+<text x="568.00" y="121.00" font-size="34.00" transform="translate(568.00,121.00) scale(1.154,0.021) translate(-568.00,-121.00)" class="base t">T</text>
+<text x="568.00" y="120.28" font-size="34.00" transform="translate(568.00,120.28) scale(1.154,0.047) translate(-568.00,-120.28)" class="base c">C</text>
+<text x="568.00" y="118.69" font-size="34.00" transform="translate(568.00,118.69) scale(1.154,1.658) translate(-568.00,-118.69)" class="base a">A</text>
+<text x="568.00" y="135.00" class="tick">6</text>
+<text x="596.24" y="121.00" font-size="34.00" transform="translate(596.24,121.00) scale(1.154,0.034) translate(-596.24,-121.00)" class="base g">G</text>
+<text x="596.24" y="119.86" font-size="34.00" transform="translate(596.24,119.86) scale(1.154,0.105) translate(-596.24,-119.86)" class="base a">A</text>
+<text x="596.24" y="116.29" font-size="34.00" transform="translate(596.24,116.29) scale(1.154,1.337) translate(-596.24,-116.29)" class="base c">C</text>
+<text x="596.24" y="135.00" class="tick">7</text>
+<text x="624.48" y="121.00" font-size="34.00" transform="translate(624.48,121.00) scale(1.154,0.145) translate(-624.48,-121.00)" class="base g">G</text>
+<text x="624.48" y="116.08" font-size="34.00" transform="translate(624.48,116.08) scale(1.154,1.408) translate(-624.48,-116.08)" class="base a">A</text>
+<text x="624.48" y="135.00" class="tick">8</text>
+<text x="652.73" y="121.00" font-size="34.00" transform="translate(652.73,121.00) scale(1.154,0.017) translate(-652.73,-121.00)" class="base t">T</text>
+<text x="652.73" y="120.42" font-size="34.00" transform="translate(652.73,120.42) scale(1.154,0.038) translate(-652.73,-120.42)" class="base a">A</text>
+<text x="652.73" y="119.15" font-size="34.00" transform="translate(652.73,119.15) scale(1.154,0.098) translate(-652.73,-119.15)" class="base g">G</text>
+<text x="652.73" y="115.81" font-size="34.00" transform="translate(652.73,115.81) scale(1.154,1.195) translate(-652.73,-115.81)" class="base c">C</text>
+<text x="652.73" y="135.00" class="tick">9</text>
+<text x="680.97" y="121.00" font-size="34.00" transform="translate(680.97,121.00) scale(1.154,2.000) translate(-680.97,-121.00)" class="base g">G</text>
+<text x="680.97" y="135.00" class="tick">10</text>
+<text x="709.21" y="121.00" font-size="34.00" transform="translate(709.21,121.00) scale(1.154,2.000) translate(-709.21,-121.00)" class="base t">T</text>
+<text x="709.21" y="135.00" class="tick">11</text>
+<text x="741.33" y="42.00" class="title">3. AT3G61250</text>
+<text x="1090.00" y="42.00" text-anchor="end" class="meta">IC=18.3 bits</text>
+<line x1="779.33" y1="121.00" x2="1090.00" y2="121.00" class="axis"/>
+<text x="771.33" y="124.00" text-anchor="end" class="tick">0</text>
+<text x="771.33" y="90.00" text-anchor="end" class="tick">1</text>
+<line x1="779.33" y1="87.00" x2="1090.00" y2="87.00" class="axis" opacity=".18"/>
+<text x="771.33" y="56.00" text-anchor="end" class="tick">2</text>
+<line x1="779.33" y1="53.00" x2="1090.00" y2="53.00" class="axis" opacity=".18"/>
+<text x="794.87" y="121.00" font-size="34.00" transform="translate(794.87,121.00) scale(1.269,2.000) translate(-794.87,-121.00)" class="base g">G</text>
+<text x="794.87" y="135.00" class="tick">1</text>
+<text x="825.93" y="121.00" font-size="34.00" transform="translate(825.93,121.00) scale(1.269,2.000) translate(-825.93,-121.00)" class="base t">T</text>
+<text x="825.93" y="135.00" class="tick">2</text>
+<text x="857.00" y="121.00" font-size="34.00" transform="translate(857.00,121.00) scale(1.269,2.000) translate(-857.00,-121.00)" class="base c">C</text>
+<text x="857.00" y="135.00" class="tick">3</text>
+<text x="888.07" y="121.00" font-size="34.00" transform="translate(888.07,121.00) scale(1.269,0.078) translate(-888.07,-121.00)" class="base g">G</text>
+<text x="888.07" y="118.35" font-size="34.00" transform="translate(888.07,118.35) scale(1.269,1.657) translate(-888.07,-118.35)" class="base a">A</text>
+<text x="888.07" y="135.00" class="tick">4</text>
+<text x="919.13" y="121.00" font-size="34.00" transform="translate(919.13,121.00) scale(1.269,0.069) translate(-919.13,-121.00)" class="base c">C</text>
+<text x="919.13" y="118.65" font-size="34.00" transform="translate(919.13,118.65) scale(1.269,1.692) translate(-919.13,-118.65)" class="base a">A</text>
+<text x="919.13" y="135.00" class="tick">5</text>
+<text x="950.20" y="121.00" font-size="34.00" transform="translate(950.20,121.00) scale(1.269,0.024) translate(-950.20,-121.00)" class="base g">G</text>
+<text x="950.20" y="120.18" font-size="34.00" transform="translate(950.20,120.18) scale(1.269,0.065) translate(-950.20,-120.18)" class="base a">A</text>
+<text x="950.20" y="117.98" font-size="34.00" transform="translate(950.20,117.98) scale(1.269,1.564) translate(-950.20,-117.98)" class="base c">C</text>
+<text x="950.20" y="135.00" class="tick">6</text>
+<text x="981.27" y="121.00" font-size="34.00" transform="translate(981.27,121.00) scale(1.269,0.104) translate(-981.27,-121.00)" class="base c">C</text>
+<text x="981.27" y="117.48" font-size="34.00" transform="translate(981.27,117.48) scale(1.269,1.560) translate(-981.27,-117.48)" class="base t">T</text>
+<text x="981.27" y="135.00" class="tick">7</text>
+<text x="1012.33" y="121.00" font-size="34.00" transform="translate(1012.33,121.00) scale(1.269,0.042) translate(-1012.33,-121.00)" class="base c">C</text>
+<text x="1012.33" y="119.56" font-size="34.00" transform="translate(1012.33,119.56) scale(1.269,1.799) translate(-1012.33,-119.56)" class="base t">T</text>
+<text x="1012.33" y="135.00" class="tick">8</text>
+<text x="1043.40" y="121.00" font-size="34.00" transform="translate(1043.40,121.00) scale(1.269,0.115) translate(-1043.40,-121.00)" class="base t">T</text>
+<text x="1043.40" y="117.09" font-size="34.00" transform="translate(1043.40,117.09) scale(1.269,1.517) translate(-1043.40,-117.09)" class="base a">A</text>
+<text x="1043.40" y="135.00" class="tick">9</text>
+<text x="1074.47" y="121.00" font-size="34.00" transform="translate(1074.47,121.00) scale(1.269,2.000) translate(-1074.47,-121.00)" class="base a">A</text>
+<text x="1074.47" y="135.00" class="tick">10</text>
+<text x="8.00" y="250.00" class="title">4. AT4G00120</text>
+<text x="356.67" y="250.00" text-anchor="end" class="meta">IC=17.5 bits</text>
+<line x1="46.00" y1="329.00" x2="356.67" y2="329.00" class="axis"/>
+<text x="38.00" y="332.00" text-anchor="end" class="tick">0</text>
+<text x="38.00" y="298.00" text-anchor="end" class="tick">1</text>
+<line x1="46.00" y1="295.00" x2="356.67" y2="295.00" class="axis" opacity=".18"/>
+<text x="38.00" y="264.00" text-anchor="end" class="tick">2</text>
+<line x1="46.00" y1="261.00" x2="356.67" y2="261.00" class="axis" opacity=".18"/>
+<text x="63.26" y="329.00" font-size="34.00" transform="translate(63.26,329.00) scale(1.410,2.000) translate(-63.26,-329.00)" class="base c">C</text>
+<text x="63.26" y="343.00" class="tick">1</text>
+<text x="97.78" y="329.00" font-size="34.00" transform="translate(97.78,329.00) scale(1.410,2.000) translate(-97.78,-329.00)" class="base t">T</text>
+<text x="97.78" y="343.00" class="tick">2</text>
+<text x="132.30" y="329.00" font-size="34.00" transform="translate(132.30,329.00) scale(1.410,0.020) translate(-132.30,-329.00)" class="base t">T</text>
+<text x="132.30" y="328.33" font-size="34.00" transform="translate(132.30,328.33) scale(1.410,1.898) translate(-132.30,-328.33)" class="base c">C</text>
+<text x="132.30" y="343.00" class="tick">3</text>
+<text x="166.81" y="329.00" font-size="34.00" transform="translate(166.81,329.00) scale(1.410,0.030) translate(-166.81,-329.00)" class="base a">A</text>
+<text x="166.81" y="327.97" font-size="34.00" transform="translate(166.81,327.97) scale(1.410,1.850) translate(-166.81,-327.97)" class="base c">C</text>
+<text x="166.81" y="343.00" class="tick">4</text>
+<text x="201.33" y="329.00" font-size="34.00" transform="translate(201.33,329.00) scale(1.410,2.000) translate(-201.33,-329.00)" class="base a">A</text>
+<text x="201.33" y="343.00" class="tick">5</text>
+<text x="235.85" y="329.00" font-size="34.00" transform="translate(235.85,329.00) scale(1.410,0.019) translate(-235.85,-329.00)" class="base c">C</text>
+<text x="235.85" y="328.34" font-size="34.00" transform="translate(235.85,328.34) scale(1.410,1.899) translate(-235.85,-328.34)" class="base a">A</text>
+<text x="235.85" y="343.00" class="tick">6</text>
+<text x="270.37" y="329.00" font-size="34.00" transform="translate(270.37,329.00) scale(1.410,0.054) translate(-270.37,-329.00)" class="base t">T</text>
+<text x="270.37" y="327.17" font-size="34.00" transform="translate(270.37,327.17) scale(1.410,1.753) translate(-270.37,-327.17)" class="base a">A</text>
+<text x="270.37" y="343.00" class="tick">7</text>
+<text x="304.89" y="329.00" font-size="34.00" transform="translate(304.89,329.00) scale(1.410,2.000) translate(-304.89,-329.00)" class="base a">A</text>
+<text x="304.89" y="343.00" class="tick">8</text>
+<text x="339.41" y="329.00" font-size="34.00" transform="translate(339.41,329.00) scale(1.410,2.000) translate(-339.41,-329.00)" class="base t">T</text>
+<text x="339.41" y="343.00" class="tick">9</text>
+<text x="374.67" y="250.00" class="title">5. AT2G35640</text>
+<text x="723.33" y="250.00" text-anchor="end" class="meta">IC=17.3 bits</text>
+<line x1="412.67" y1="329.00" x2="723.33" y2="329.00" class="axis"/>
+<text x="404.67" y="332.00" text-anchor="end" class="tick">0</text>
+<text x="404.67" y="298.00" text-anchor="end" class="tick">1</text>
+<line x1="412.67" y1="295.00" x2="723.33" y2="295.00" class="axis" opacity=".18"/>
+<text x="404.67" y="264.00" text-anchor="end" class="tick">2</text>
+<line x1="412.67" y1="261.00" x2="723.33" y2="261.00" class="axis" opacity=".18"/>
+<text x="429.93" y="329.00" font-size="34.00" transform="translate(429.93,329.00) scale(1.410,2.000) translate(-429.93,-329.00)" class="base t">T</text>
+<text x="429.93" y="343.00" class="tick">1</text>
+<text x="464.44" y="329.00" font-size="34.00" transform="translate(464.44,329.00) scale(1.410,2.000) translate(-464.44,-329.00)" class="base c">C</text>
+<text x="464.44" y="343.00" class="tick">2</text>
+<text x="498.96" y="329.00" font-size="34.00" transform="translate(498.96,329.00) scale(1.410,2.000) translate(-498.96,-329.00)" class="base c">C</text>
+<text x="498.96" y="343.00" class="tick">3</text>
+<text x="533.48" y="329.00" font-size="34.00" transform="translate(533.48,329.00) scale(1.410,0.058) translate(-533.48,-329.00)" class="base c">C</text>
+<text x="533.48" y="327.02" font-size="34.00" transform="translate(533.48,327.02) scale(1.410,1.735) translate(-533.48,-327.02)" class="base a">A</text>
+<text x="533.48" y="343.00" class="tick">4</text>
+<text x="568.00" y="329.00" font-size="34.00" transform="translate(568.00,329.00) scale(1.410,2.000) translate(-568.00,-329.00)" class="base a">A</text>
+<text x="568.00" y="343.00" class="tick">5</text>
+<text x="602.52" y="329.00" font-size="34.00" transform="translate(602.52,329.00) scale(1.410,2.000) translate(-602.52,-329.00)" class="base a">A</text>
+<text x="602.52" y="343.00" class="tick">6</text>
+<text x="637.04" y="329.00" font-size="34.00" transform="translate(637.04,329.00) scale(1.410,0.066) translate(-637.04,-329.00)" class="base a">A</text>
+<text x="637.04" y="326.77" font-size="34.00" transform="translate(637.04,326.77) scale(1.410,1.706) translate(-637.04,-326.77)" class="base c">C</text>
+<text x="637.04" y="343.00" class="tick">7</text>
+<text x="671.56" y="329.00" font-size="34.00" transform="translate(671.56,329.00) scale(1.410,2.000) translate(-671.56,-329.00)" class="base a">A</text>
+<text x="671.56" y="343.00" class="tick">8</text>
+<text x="706.07" y="329.00" font-size="34.00" transform="translate(706.07,329.00) scale(1.410,0.066) translate(-706.07,-329.00)" class="base t">T</text>
+<text x="706.07" y="326.77" font-size="34.00" transform="translate(706.07,326.77) scale(1.410,1.706) translate(-706.07,-326.77)" class="base g">G</text>
+<text x="706.07" y="343.00" class="tick">9</text>
+<text x="741.33" y="250.00" class="title">6. AT3G19500</text>
+<text x="1090.00" y="250.00" text-anchor="end" class="meta">IC=17.3 bits</text>
+<line x1="779.33" y1="329.00" x2="1090.00" y2="329.00" class="axis"/>
+<text x="771.33" y="332.00" text-anchor="end" class="tick">0</text>
+<text x="771.33" y="298.00" text-anchor="end" class="tick">1</text>
+<line x1="779.33" y1="295.00" x2="1090.00" y2="295.00" class="axis" opacity=".18"/>
+<text x="771.33" y="264.00" text-anchor="end" class="tick">2</text>
+<line x1="779.33" y1="261.00" x2="1090.00" y2="261.00" class="axis" opacity=".18"/>
+<text x="796.59" y="329.00" font-size="34.00" transform="translate(796.59,329.00) scale(1.410,2.000) translate(-796.59,-329.00)" class="base t">T</text>
+<text x="796.59" y="343.00" class="tick">1</text>
+<text x="831.11" y="329.00" font-size="34.00" transform="translate(831.11,329.00) scale(1.410,0.076) translate(-831.11,-329.00)" class="base a">A</text>
+<text x="831.11" y="326.40" font-size="34.00" transform="translate(831.11,326.40) scale(1.410,1.663) translate(-831.11,-326.40)" class="base c">C</text>
+<text x="831.11" y="343.00" class="tick">2</text>
+<text x="865.63" y="329.00" font-size="34.00" transform="translate(865.63,329.00) scale(1.410,1.957) translate(-865.63,-329.00)" class="base a">A</text>
+<text x="865.63" y="343.00" class="tick">3</text>
+<text x="900.15" y="329.00" font-size="34.00" transform="translate(900.15,329.00) scale(1.410,2.000) translate(-900.15,-329.00)" class="base a">A</text>
+<text x="900.15" y="343.00" class="tick">4</text>
+<text x="934.67" y="329.00" font-size="34.00" transform="translate(934.67,329.00) scale(1.410,0.062) translate(-934.67,-329.00)" class="base a">A</text>
+<text x="934.67" y="326.88" font-size="34.00" transform="translate(934.67,326.88) scale(1.410,1.718) translate(-934.67,-326.88)" class="base g">G</text>
+<text x="934.67" y="343.00" class="tick">5</text>
+<text x="969.19" y="329.00" font-size="34.00" transform="translate(969.19,329.00) scale(1.410,0.062) translate(-969.19,-329.00)" class="base c">C</text>
+<text x="969.19" y="326.88" font-size="34.00" transform="translate(969.19,326.88) scale(1.410,1.718) translate(-969.19,-326.88)" class="base a">A</text>
+<text x="969.19" y="343.00" class="tick">6</text>
+<text x="1003.70" y="329.00" font-size="34.00" transform="translate(1003.70,329.00) scale(1.410,2.000) translate(-1003.70,-329.00)" class="base a">A</text>
+<text x="1003.70" y="343.00" class="tick">7</text>
+<text x="1038.22" y="329.00" font-size="34.00" transform="translate(1038.22,329.00) scale(1.410,2.000) translate(-1038.22,-329.00)" class="base a">A</text>
+<text x="1038.22" y="343.00" class="tick">8</text>
+<text x="1072.74" y="329.00" font-size="34.00" transform="translate(1072.74,329.00) scale(1.410,2.000) translate(-1072.74,-329.00)" class="base c">C</text>
+<text x="1072.74" y="343.00" class="tick">9</text>
+<text x="8.00" y="458.00" class="title">7. AT5G18090</text>
+<text x="356.67" y="458.00" text-anchor="end" class="meta">IC=17.0 bits</text>
+<line x1="46.00" y1="537.00" x2="356.67" y2="537.00" class="axis"/>
+<text x="38.00" y="540.00" text-anchor="end" class="tick">0</text>
+<text x="38.00" y="506.00" text-anchor="end" class="tick">1</text>
+<line x1="46.00" y1="503.00" x2="356.67" y2="503.00" class="axis" opacity=".18"/>
+<text x="38.00" y="472.00" text-anchor="end" class="tick">2</text>
+<line x1="46.00" y1="469.00" x2="356.67" y2="469.00" class="axis" opacity=".18"/>
+<text x="63.26" y="537.00" font-size="34.00" transform="translate(63.26,537.00) scale(1.410,2.000) translate(-63.26,-537.00)" class="base a">A</text>
+<text x="63.26" y="551.00" class="tick">1</text>
+<text x="97.78" y="537.00" font-size="34.00" transform="translate(97.78,537.00) scale(1.410,2.000) translate(-97.78,-537.00)" class="base a">A</text>
+<text x="97.78" y="551.00" class="tick">2</text>
+<text x="132.30" y="537.00" font-size="34.00" transform="translate(132.30,537.00) scale(1.410,0.407) translate(-132.30,-537.00)" class="base g">G</text>
+<text x="132.30" y="523.18" font-size="34.00" transform="translate(132.30,523.18) scale(1.410,0.626) translate(-132.30,-523.18)" class="base c">C</text>
+<text x="132.30" y="551.00" class="tick">3</text>
+<text x="166.81" y="537.00" font-size="34.00" transform="translate(166.81,537.00) scale(1.410,2.000) translate(-166.81,-537.00)" class="base a">A</text>
+<text x="166.81" y="551.00" class="tick">4</text>
+<text x="201.33" y="537.00" font-size="34.00" transform="translate(201.33,537.00) scale(1.410,2.000) translate(-201.33,-537.00)" class="base a">A</text>
+<text x="201.33" y="551.00" class="tick">5</text>
+<text x="235.85" y="537.00" font-size="34.00" transform="translate(235.85,537.00) scale(1.410,2.000) translate(-235.85,-537.00)" class="base a">A</text>
+<text x="235.85" y="551.00" class="tick">6</text>
+<text x="270.37" y="537.00" font-size="34.00" transform="translate(270.37,537.00) scale(1.410,2.000) translate(-270.37,-537.00)" class="base g">G</text>
+<text x="270.37" y="551.00" class="tick">7</text>
+<text x="304.89" y="537.00" font-size="34.00" transform="translate(304.89,537.00) scale(1.410,2.000) translate(-304.89,-537.00)" class="base a">A</text>
+<text x="304.89" y="551.00" class="tick">8</text>
+<text x="339.41" y="537.00" font-size="34.00" transform="translate(339.41,537.00) scale(1.410,2.000) translate(-339.41,-537.00)" class="base a">A</text>
+<text x="339.41" y="551.00" class="tick">9</text>
+<text x="374.67" y="458.00" class="title">8. AT3G18010</text>
+<text x="723.33" y="458.00" text-anchor="end" class="meta">IC=17.0 bits</text>
+<line x1="412.67" y1="537.00" x2="723.33" y2="537.00" class="axis"/>
+<text x="404.67" y="540.00" text-anchor="end" class="tick">0</text>
+<text x="404.67" y="506.00" text-anchor="end" class="tick">1</text>
+<line x1="412.67" y1="503.00" x2="723.33" y2="503.00" class="axis" opacity=".18"/>
+<text x="404.67" y="472.00" text-anchor="end" class="tick">2</text>
+<line x1="412.67" y1="469.00" x2="723.33" y2="469.00" class="axis" opacity=".18"/>
+<text x="429.93" y="537.00" font-size="34.00" transform="translate(429.93,537.00) scale(1.410,2.000) translate(-429.93,-537.00)" class="base t">T</text>
+<text x="429.93" y="551.00" class="tick">1</text>
+<text x="464.44" y="537.00" font-size="34.00" transform="translate(464.44,537.00) scale(1.410,2.000) translate(-464.44,-537.00)" class="base t">T</text>
+<text x="464.44" y="551.00" class="tick">2</text>
+<text x="498.96" y="537.00" font-size="34.00" transform="translate(498.96,537.00) scale(1.410,2.000) translate(-498.96,-537.00)" class="base c">C</text>
+<text x="498.96" y="551.00" class="tick">3</text>
+<text x="533.48" y="537.00" font-size="34.00" transform="translate(533.48,537.00) scale(1.410,2.000) translate(-533.48,-537.00)" class="base a">A</text>
+<text x="533.48" y="551.00" class="tick">4</text>
+<text x="568.00" y="537.00" font-size="34.00" transform="translate(568.00,537.00) scale(1.410,2.000) translate(-568.00,-537.00)" class="base a">A</text>
+<text x="568.00" y="551.00" class="tick">5</text>
+<text x="602.52" y="537.00" font-size="34.00" transform="translate(602.52,537.00) scale(1.410,2.000) translate(-602.52,-537.00)" class="base a">A</text>
+<text x="602.52" y="551.00" class="tick">6</text>
+<text x="637.04" y="537.00" font-size="34.00" transform="translate(637.04,537.00) scale(1.410,0.481) translate(-637.04,-537.00)" class="base a">A</text>
+<text x="637.04" y="520.64" font-size="34.00" transform="translate(637.04,520.64) scale(1.410,0.520) translate(-637.04,-520.64)" class="base g">G</text>
+<text x="637.04" y="551.00" class="tick">7</text>
+<text x="671.56" y="537.00" font-size="34.00" transform="translate(671.56,537.00) scale(1.410,2.000) translate(-671.56,-537.00)" class="base t">T</text>
+<text x="671.56" y="551.00" class="tick">8</text>
+<text x="706.07" y="537.00" font-size="34.00" transform="translate(706.07,537.00) scale(1.410,2.000) translate(-706.07,-537.00)" class="base t">T</text>
+<text x="706.07" y="551.00" class="tick">9</text>
+<text x="741.33" y="458.00" class="title">9. AT4G01720</text>
+<text x="1090.00" y="458.00" text-anchor="end" class="meta">IC=16.9 bits</text>
+<line x1="779.33" y1="537.00" x2="1090.00" y2="537.00" class="axis"/>
+<text x="771.33" y="540.00" text-anchor="end" class="tick">0</text>
+<text x="771.33" y="506.00" text-anchor="end" class="tick">1</text>
+<line x1="779.33" y1="503.00" x2="1090.00" y2="503.00" class="axis" opacity=".18"/>
+<text x="771.33" y="472.00" text-anchor="end" class="tick">2</text>
+<line x1="779.33" y1="469.00" x2="1090.00" y2="469.00" class="axis" opacity=".18"/>
+<text x="796.59" y="537.00" font-size="34.00" transform="translate(796.59,537.00) scale(1.410,2.000) translate(-796.59,-537.00)" class="base a">A</text>
+<text x="796.59" y="551.00" class="tick">1</text>
+<text x="831.11" y="537.00" font-size="34.00" transform="translate(831.11,537.00) scale(1.410,2.000) translate(-831.11,-537.00)" class="base a">A</text>
+<text x="831.11" y="551.00" class="tick">2</text>
+<text x="865.63" y="537.00" font-size="34.00" transform="translate(865.63,537.00) scale(1.410,2.000) translate(-865.63,-537.00)" class="base a">A</text>
+<text x="865.63" y="551.00" class="tick">3</text>
+<text x="900.15" y="537.00" font-size="34.00" transform="translate(900.15,537.00) scale(1.410,2.000) translate(-900.15,-537.00)" class="base g">G</text>
+<text x="900.15" y="551.00" class="tick">4</text>
+<text x="934.67" y="537.00" font-size="34.00" transform="translate(934.67,537.00) scale(1.410,0.081) translate(-934.67,-537.00)" class="base a">A</text>
+<text x="934.67" y="534.26" font-size="34.00" transform="translate(934.67,534.26) scale(1.410,1.648) translate(-934.67,-534.26)" class="base t">T</text>
+<text x="934.67" y="551.00" class="tick">5</text>
+<text x="969.19" y="537.00" font-size="34.00" transform="translate(969.19,537.00) scale(1.410,0.081) translate(-969.19,-537.00)" class="base t">T</text>
+<text x="969.19" y="534.26" font-size="34.00" transform="translate(969.19,534.26) scale(1.410,1.648) translate(-969.19,-534.26)" class="base c">C</text>
+<text x="969.19" y="551.00" class="tick">6</text>
+<text x="1003.70" y="537.00" font-size="34.00" transform="translate(1003.70,537.00) scale(1.410,0.083) translate(-1003.70,-537.00)" class="base c">C</text>
+<text x="1003.70" y="534.17" font-size="34.00" transform="translate(1003.70,534.17) scale(1.410,1.637) translate(-1003.70,-534.17)" class="base a">A</text>
+<text x="1003.70" y="551.00" class="tick">7</text>
+<text x="1038.22" y="537.00" font-size="34.00" transform="translate(1038.22,537.00) scale(1.410,0.083) translate(-1038.22,-537.00)" class="base g">G</text>
+<text x="1038.22" y="534.17" font-size="34.00" transform="translate(1038.22,534.17) scale(1.410,1.637) translate(-1038.22,-534.17)" class="base a">A</text>
+<text x="1038.22" y="551.00" class="tick">8</text>
+<text x="1072.74" y="537.00" font-size="34.00" transform="translate(1072.74,537.00) scale(1.410,2.000) translate(-1072.74,-537.00)" class="base c">C</text>
+<text x="1072.74" y="551.00" class="tick">9</text>
+</g></svg>

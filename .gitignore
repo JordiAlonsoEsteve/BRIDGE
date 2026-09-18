@@ -1,6 +1,7 @@
 # Data
 results*
-data/
+*data*/
+demo/*.csv
 !data/.gitkeep
 results/
 !results/.gitkeep

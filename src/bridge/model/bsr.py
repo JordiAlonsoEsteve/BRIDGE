@@ -75,8 +75,6 @@ class BSR:
         main_effects_C=True,
         main_effects_X=True,
         main_effects_only=False,
-        proximal_operator="soft_thresholding",  # or "elite_lasso"
-        mask=None,  # boolean array. If true, 0.
     ):
         self.dtype = dtype
         # Transform to jax arrays
@@ -84,15 +82,11 @@ class BSR:
         self.Y = jnp.array(Y)
         self.C = jnp.array(C)
         self.lambd = jnp.float32(lambd)
-        if mask is not None:
-            print("Mask provided. Setting alpha to 0.0 to disable L1 penalty.")
-        self.alpha = jnp.float32(alpha) if mask is None else jnp.float32(0.0)
+        self.alpha = jnp.float32(alpha)
 
         self.max_iter = max_iter
         self.tol = tol
         self.main_effects_only = main_effects_only
-        self.proximal_operator = proximal_operator
-        self.mask = mask
 
         # Including intercepts:
         n = self.C.shape[0]  # number of samples
@@ -144,60 +138,93 @@ class BSR:
 
     def _soft_thresholding(self, Z, threshold):
         return jnp.sign(Z) * jnp.maximum(jnp.abs(Z) - threshold, 0)
-
-    def _fista_loop(self, Theta0, step, thresh, A, B, D):
-        """
-        Fully JIT-compiled FISTA loop as class method
-        """
+    
+    def _prox_step(self, G, J, thresh):
+        """Shared proximal-step logic, factored out so both the monitored
+        and unmonitored loop bodies stay in sync."""
+       
+        Theta_new = self._soft_thresholding(J, thresh)
+        # Do not penalize intercept
+        Theta_new = Theta_new.at[0, 0].set(G[0, 0])
+        if self.main_effects_only:
+            Theta_new = Theta_new.at[1:, 1:].set(0.0)
+        return Theta_new
+    
+    def _fista_loop(self, Theta0, step, thresh, A, B, D, monitor=False, monitor_every=100):
 
         def cond_fn(state):
-            _Theta, _Q, _t, k, err = state
+            k, err = state[3], state[4]
             return jnp.logical_and(k < self.max_iter, err > self.tol)
 
-        def body_fn(state):
-            Theta, Q, t, k, _ = state
-
-            # Gradient step at extrapolated point
+        def step_core(Theta, Q, t):
             grad_Q = self._grad(Q, A, B, D)
             G = Q - step * grad_Q
-
             J = G.at[0, 0].set(0.0)
-            if self.proximal_operator == "elite_lasso" and self.mask is None:
-                # In this case soft thresholding applied to the intercepts and exclusive lasso applied to the rest of the matrix
-                Theta_new = self._soft_thresholding(G, thresh)
-                Theta_new = Theta_new.at[1:, 1:].set(
-                    prox_exclusive_lasso_cols(J[1:, 1:], thresh)
-                )
-            elif self.proximal_operator == "soft_thresholding" and self.mask is None:
-                Theta_new = self._soft_thresholding(J, thresh)
-            elif self.mask is not None:
-                Theta_new = jnp.where(self.mask, 0.0, J)
+            Theta_new = self._prox_step(G, J, thresh)
 
-            # Do not penalize intercept
-            Theta_new = Theta_new.at[0, 0].set(G[0, 0])
-            if self.main_effects_only:
-                Theta_new = Theta_new.at[1:, 1:].set(0.0)
-
-            # FISTA momentum update
             t_new = (1.0 + jnp.sqrt(1.0 + 4.0 * t * t)) / 2.0
             Q_new = Theta_new + ((t - 1.0) / t_new) * (Theta_new - Theta)
 
-            err = jnp.max(jnp.abs(Theta_new - Theta)) / jnp.max(jnp.abs(Theta) + 1e-8)
+            err_new = jnp.max(jnp.abs(Theta_new - Theta)) / jnp.max(
+                jnp.abs(Theta) + 1e-8
+            )
+            return Theta_new, Q_new, t_new, err_new
 
-            return Theta_new, Q_new, t_new, k + 1, err
+        if not monitor:
+            def body_fn(state):
+                Theta, Q, t, k, err = state
+                Theta_new, Q_new, t_new, err_new = step_core(Theta, Q, t)
+                return Theta_new, Q_new, t_new, k + 1, err_new
+
+            init_state = (Theta0, Theta0, 1.0, 0, jnp.inf)
+            Theta, Q, t, k, err = jax.lax.while_loop(cond_fn, body_fn, init_state)
+            return Theta, k, err, None, None, 0
+
+        # ---- Monitored loop: extra history arrays carried in the state ----
+        max_history = self.max_iter // monitor_every + 2
+
+        def body_fn(state):
+            Theta, Q, t, k, err, err_hist, loss_hist, hist_idx = state
+            Theta_new, Q_new, t_new, err_new = step_core(Theta, Q, t)
+
+            should_log = (k % monitor_every) == 0
+
+            def do_log(carry):
+                err_hist, loss_hist, hist_idx = carry
+                loss_val = self._loss(Theta_new)  # only computed on logged iters
+                err_hist = jax.lax.dynamic_update_slice_in_dim(
+                    err_hist, err_new[None], hist_idx, axis=0
+                )
+                loss_hist = jax.lax.dynamic_update_slice_in_dim(
+                    loss_hist, loss_val[None], hist_idx, axis=0
+                )
+                return err_hist, loss_hist, hist_idx + 1
+
+            def skip_log(carry):
+                return carry
+
+            err_hist, loss_hist, hist_idx = jax.lax.cond(
+                should_log, do_log, skip_log, (err_hist, loss_hist, hist_idx)
+            )
+
+            return Theta_new, Q_new, t_new, k + 1, err_new, err_hist, loss_hist, hist_idx
 
         init_state = (
-            Theta0,  # Theta
-            Theta0,  # Q
-            1.0,  # t
-            0,  # iteration counter
-            jnp.inf,  # initial error
+            Theta0,
+            Theta0,
+            1.0,
+            0,
+            jnp.inf,
+            jnp.full((max_history,), jnp.nan, dtype=self.dtype),
+            jnp.full((max_history,), jnp.nan, dtype=self.dtype),
+            0,
         )
+        Theta, Q, t, k, err, err_hist, loss_hist, hist_idx = jax.lax.while_loop(
+            cond_fn, body_fn, init_state
+        )
+        return Theta, k, err, err_hist, loss_hist, hist_idx
 
-        Theta, _Q, _t, k, err = jax.lax.while_loop(cond_fn, body_fn, init_state)
-        return Theta, k, err
-
-    def fit(self):
+    def fit(self, monitor=False, monitor_every=100):
         step = 1.0 / self.L_init
         thresh = self.lambd * self.alpha * step
 
@@ -206,25 +233,25 @@ class BSR:
         B = self.X @ self.X.T
         D = (self.C.T @ self.Y @ self.X.T) / self.N
         # assert that the types are correct
-        assert (
-            self.Theta.dtype == self.dtype
-        ), f"Theta dtype {self.Theta.dtype} does not match expected dtype {self.dtype}"
-        assert (
-            A.dtype == self.Theta.dtype
-        ), f"A dtype {A.dtype} does not match Theta dtype {self.Theta.dtype}"
-        assert (
-            B.dtype == self.Theta.dtype
-        ), f"B dtype {B.dtype} does not match Theta dtype {self.Theta.dtype}"
-        assert (
-            D.dtype == self.Theta.dtype
-        ), f"D dtype {D.dtype} does not match Theta dtype {self.Theta.dtype}"
+        assert self.Theta.dtype == self.dtype, f"Theta dtype {self.Theta.dtype} does not match expected dtype {self.dtype}"
+        assert A.dtype == self.Theta.dtype, f"A dtype {A.dtype} does not match Theta dtype {self.Theta.dtype}"
+        assert B.dtype == self.Theta.dtype, f"B dtype {B.dtype} does not match Theta dtype {self.Theta.dtype}"
+        assert D.dtype == self.Theta.dtype, f"D dtype {D.dtype} does not match Theta dtype {self.Theta.dtype}"
 
         print("Starting FISTA...")
         init_time = time.time()
-        Theta, n_iter, err = self._fista_loop(self.Theta, step, thresh, A=A, B=B, D=D)
+        Theta, n_iter, err, err_hist, loss_hist, hist_len = self._fista_loop(
+            self.Theta, step, thresh, A=A, B=B, D=D,
+            monitor=monitor, monitor_every=monitor_every,
+        )
         Theta = jnp.where(jnp.abs(Theta) < 1e-6, 0.0, Theta)
         elapsed = time.time() - init_time
         self.Theta = Theta
+
+        if monitor:
+            hist_len = int(hist_len)
+            self.err_history = np.asarray(err_hist[:hist_len])
+            self.loss_history = np.asarray(loss_hist[:hist_len])
 
         sparsity = jnp.mean(Theta == 0)
         msg = (
