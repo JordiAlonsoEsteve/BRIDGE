@@ -1,6 +1,7 @@
 ![Python](https://img.shields.io/badge/python-3.10+-blue)
 # 🧬 Bilinear Regulatory Inference from DNA and Gene Expression (BRIDGE) 🧬
-Discover transcription factor binding motifs de novo from RNA-seq — like a Protein Binding Microarray, computed in silico from the data you already have.
+Predict transcription factor binding motifs de novo from RNA-seq
+
 ![BRIDGE Architecture](images/Overview.png)
 
 ## 🔍 What is this?
@@ -8,7 +9,7 @@ Transcription factors (TFs) regulate gene expression by binding specific DNA seq
 
 BRIDGE unifies both into a single convex optimization problem. It factorizes gene expression as an explicit interaction between promoter k-mers (cis) and TF abundance (trans), recovering both regulatory network structure and de novo TF binding motifs (TFBMs) from the same model — with a guaranteed unique global optimum.
 
-Because it only needs RNA-seq, a genome (FASTA), and an annotation (GFF) — data you likely already have if you're doing transcriptomics — BRIDGE effectively acts as an *in silico* Protein Binding Microarray, inferring TF-specific TFBMs without prior motif libraries or additional wet-lab assays.
+BRIDGE only needs RNA-seq data, a genome (FASTA), and an annotation (GFF), data you likely already have if you're doing transcriptomics, and infers TF-specific TFBMs without prior motif libraries or additional wet-lab assays.
 
 ## 🛠️ Installation
 
@@ -33,12 +34,12 @@ This installs the `bridge` package (from `src/bridge`) along with its dependenci
 
 ## 🔬 Usage Demo: RNA-seq + DNA → Inferred TF-Specific Binding Motifs (.MEME)
 
-1. Download the data and generate the X, Y and C matrices.
+1. Download the data and generate the X (TFs x samples), Y (Target genes x samples) and C (Target genes x k-mers) matrices.
 ```bash
 bash demo/donwload_data.sh
 python demo/generate_XYC.py
 ```
-This generates the necessary data to use BRIDGE on a Pattern Triggered Immunity (PTI) dataset for *Arabidopsis Thaliana* (see https://pmc.ncbi.nlm.nih.gov/articles/PMC7610817/). This generates the required dataframes .csv in the demo folder; 
+The above generates the necessary data to use BRIDGE on a Pattern Triggered Immunity (PTI) dataset for *Arabidopsis Thaliana* (see https://pmc.ncbi.nlm.nih.gov/articles/PMC7610817/). It generates the required dataframes .csv in the demo folder. Then, to obtain a .meme with the TFs and their motifs:
 
 ```python
 import pandas as pd
@@ -60,9 +61,9 @@ from bridge.motif.motif_construction import (
 alpha = 0.305 
 lambd=0.008
 
-X = pd.read_csv("demo/X.csv", index_col=0)
-Y = pd.read_csv("demo/Y.csv", index_col=0)
-C = pd.read_csv("demo/C.csv", index_col=0)
+X = pd.read_csv("demo/X.csv", index_col=0) # TFs x samples (e.g. Log2FC)
+Y = pd.read_csv("demo/Y.csv", index_col=0) # Target genes x samples (e.g. Log2FC)
+C = pd.read_csv("demo/C.csv", index_col=0) # Target genes x 6-mers (e.g. vectors of 6-mer counts)
 
 BSR_model = BSR(
         X=X.values,

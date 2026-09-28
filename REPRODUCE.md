@@ -6,7 +6,7 @@ While most of the datasets can be comfortably used on a standard laptop with a G
 considerable VRAM > 7Gb. Furthermore, to get good reproducible results running FISTA at float64 is required (as done in the mansucript).
 This is considerably slower in standard hardware. We used H100, which deals with double precision pretty okay.
 
-Pre-processing of TabulaSapiens into pseudo-counts will also require considerable ammount of RAM >40Gb (or modifying the scripts provided here).
+Pre-processing of TabulaSapiens into pseudo-counts will also require considerable amount of RAM >40Gb (or modifying the scripts provided here).
 
 
 ## Data processing
