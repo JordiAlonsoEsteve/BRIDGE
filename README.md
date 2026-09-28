@@ -57,7 +57,8 @@ from bridge.motif.motif_construction import (
     generate_PWM_from_theta,
 )
 
-# Good hyperparameters from the manuscript
+# Good hyperparameters from the manuscript 
+# (otherwise use src/bridge/hyperparam_tuning functionality, with test/train sets and so on, see: src/bridge/training/train_bsr.py)
 alpha = 0.305 
 lambd=0.008
 
