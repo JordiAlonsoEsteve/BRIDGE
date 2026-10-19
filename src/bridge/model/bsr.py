@@ -9,6 +9,7 @@ import numpy as np
 # allow jax to use 64-bit floats for higher numerical precision
 jax.config.update("jax_enable_x64", True)
 
+
 @jax.jit
 def prox_exclusive_lasso_cols(V, lmbda):
     """
@@ -113,7 +114,6 @@ class BSR:
         self.Y = self.Y.astype(dtype)
         self.lambd = self.lambd.astype(dtype)
         self.alpha = self.alpha.astype(dtype)
-        
 
         self.L_init = (1 / self.N) * (
             jnp.linalg.norm(self.C, 2) ** 2 * jnp.linalg.norm(self.X, 2) ** 2
@@ -165,7 +165,9 @@ class BSR:
             if self.proximal_operator == "elite_lasso" and self.mask is None:
                 # In this case soft thresholding applied to the intercepts and exclusive lasso applied to the rest of the matrix
                 Theta_new = self._soft_thresholding(G, thresh)
-                Theta_new = Theta_new.at[1:, 1:].set(prox_exclusive_lasso_cols(J[1:, 1:], thresh))
+                Theta_new = Theta_new.at[1:, 1:].set(
+                    prox_exclusive_lasso_cols(J[1:, 1:], thresh)
+                )
             elif self.proximal_operator == "soft_thresholding" and self.mask is None:
                 Theta_new = self._soft_thresholding(J, thresh)
             elif self.mask is not None:
@@ -181,7 +183,7 @@ class BSR:
             Q_new = Theta_new + ((t - 1.0) / t_new) * (Theta_new - Theta)
 
             err = jnp.max(jnp.abs(Theta_new - Theta)) / jnp.max(jnp.abs(Theta) + 1e-8)
-            
+
             return Theta_new, Q_new, t_new, k + 1, err
 
         init_state = (
@@ -203,12 +205,20 @@ class BSR:
         A = (self.C.T @ self.C) / self.N
         B = self.X @ self.X.T
         D = (self.C.T @ self.Y @ self.X.T) / self.N
-        # assert that the types are correct 
-        assert self.Theta.dtype == self.dtype, f"Theta dtype {self.Theta.dtype} does not match expected dtype {self.dtype}"
-        assert A.dtype == self.Theta.dtype, f"A dtype {A.dtype} does not match Theta dtype {self.Theta.dtype}"
-        assert B.dtype == self.Theta.dtype, f"B dtype {B.dtype} does not match Theta dtype {self.Theta.dtype}"
-        assert D.dtype == self.Theta.dtype, f"D dtype {D.dtype} does not match Theta dtype {self.Theta.dtype}"
-        
+        # assert that the types are correct
+        assert (
+            self.Theta.dtype == self.dtype
+        ), f"Theta dtype {self.Theta.dtype} does not match expected dtype {self.dtype}"
+        assert (
+            A.dtype == self.Theta.dtype
+        ), f"A dtype {A.dtype} does not match Theta dtype {self.Theta.dtype}"
+        assert (
+            B.dtype == self.Theta.dtype
+        ), f"B dtype {B.dtype} does not match Theta dtype {self.Theta.dtype}"
+        assert (
+            D.dtype == self.Theta.dtype
+        ), f"D dtype {D.dtype} does not match Theta dtype {self.Theta.dtype}"
+
         print("Starting FISTA...")
         init_time = time.time()
         Theta, n_iter, err = self._fista_loop(self.Theta, step, thresh, A=A, B=B, D=D)

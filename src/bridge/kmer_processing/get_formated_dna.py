@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 from typing import Literal
-import os 
+import os
 
 from bridge.dna_parsing.load_promoters import load_promoters
 from bridge.kmer_processing.k_mer_utils import generate_kmer_count_vector

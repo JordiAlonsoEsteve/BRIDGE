@@ -92,13 +92,17 @@ python preprocessing_scripts/gene_lengths.py
 We have 7 datasets, each with its own particularities. Let's start with Arabidopsis.
 #### *Arabidopsis thaliana*
 
+The hormone data comes already log2FC and TPM normalized.
 ##### Hormone data
-?????????
+```bash
+mkdir -p data/processed/mRNA/ath/
 
+curl -L --output-dir data/processed/mRNA/ath -O "https://zenodo.org/records/23475890/files/all_hormone_log2FC.csv"
+curl -L --output-dir data/processed/mRNA/ath -O "https://zenodo.org/records/23475890/files/all_hormone_TPM.csv"
+```
 ##### PTI data
 ```bash
 mkdir -p data/raw/rna_seq_ath/PTI
-mkdir -p data/processed/mRNA/ath/
 wget -O data/raw/rna_seq_ath/PTI/PRJEB25079_UncorrectedCounts.csv https://ftp.ebi.ac.uk/biostudies/fire/E-MTAB-/694/E-MTAB-9694/Files/PRJEB25079_UncorrectedCounts.csv
 python preprocessing_scripts/process_PTI.py
 ```

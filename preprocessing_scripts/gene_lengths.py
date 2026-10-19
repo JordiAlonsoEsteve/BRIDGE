@@ -49,7 +49,7 @@ if __name__ == "__main__":
         "data/raw/dna_tair10/TAIR10_GFF3_genes.gff",
         "data/raw/dna_tair10/gene_exon_lengths.txt",
     )
-    #calculate_gene_lengths(
+    # calculate_gene_lengths(
     #    "data/raw/dna_araport11/Araport11_GFF3_genes_transposons.20250813.gff",
     #    "data/raw/dna_araport11/gene_exon_lengths.txt",
-    #)
+    # )

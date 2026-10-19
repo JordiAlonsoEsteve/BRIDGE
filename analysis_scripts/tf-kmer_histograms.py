@@ -136,29 +136,44 @@ def plot_combined_histograms(
 
 if __name__ == "__main__":
     treatments_pretty_names = {
-                "PTI_TPM": "PTI (TPM)",
-                "all_hormone_TPM": "Hormone (TPM)",
-                "leaf_CPTT": "Leaf (CPTT)",
-                "PTI_log2FC": r"PTI ($\log_2$FC)",
-                "all_hormone_log2FC": r"Hormone ($\log_2$FC)",
-                "PB_snRNA_hormone_log2FC": r"SN Hormone ($\log_2$FC)",
-                "PB_snRNA_hormone_CPTT": "SN Hormone (CPTT)",
-                "GTX": "GTEx (TPM)",
-                "TabulaSapiens": "Tabula Sapiens (CPTT)",
-                "PMBC_CPTT": "PBMC (CPTT)",
-                "TCGA": "TCGA (TPM)",
-            }
+        "PTI_TPM": "PTI (TPM)",
+        "all_hormone_TPM": "Hormone (TPM)",
+        "leaf_CPTT": "Leaf (CPTT)",
+        "PTI_log2FC": r"PTI ($\log_2$FC)",
+        "all_hormone_log2FC": r"Hormone ($\log_2$FC)",
+        "PB_snRNA_hormone_log2FC": r"SN Hormone ($\log_2$FC)",
+        "PB_snRNA_hormone_CPTT": "SN Hormone (CPTT)",
+        "GTX": "GTEx (TPM)",
+        "TabulaSapiens": "Tabula Sapiens (CPTT)",
+        "PMBC_CPTT": "PBMC (CPTT)",
+        "TCGA": "TCGA (TPM)",
+    }
     experiments = [
-        ("ath", ["PTI_TPM", "all_hormone_TPM", "leaf_CPTT", "PTI_log2FC", "all_hormone_log2FC", "PB_snRNA_hormone_log2FC", "PB_snRNA_hormone_CPTT"]),
-         ("human", ["GTX", "TabulaSapiens", "PMBC_CPTT", "TCGA"])
+        (
+            "ath",
+            [
+                "PTI_TPM",
+                "all_hormone_TPM",
+                "leaf_CPTT",
+                "PTI_log2FC",
+                "all_hormone_log2FC",
+                "PB_snRNA_hormone_log2FC",
+                "PB_snRNA_hormone_CPTT",
+            ],
+        ),
+        ("human", ["GTX", "TabulaSapiens", "PMBC_CPTT", "TCGA"]),
     ]
 
     print("Loading mappings and extracting data...")
     gene_to_symbol_ath, gene_to_symbol_human = load_mappings()
     kmers_per_tf, tfs_per_kmer = extract_distributions(experiments)
     # re-name the keys in the distributions to their pretty names
-    kmers_per_tf = {treatments_pretty_names.get(k, k): v for k, v in kmers_per_tf.items()}
-    tfs_per_kmer = {treatments_pretty_names.get(k, k): v for k, v in tfs_per_kmer.items()}
+    kmers_per_tf = {
+        treatments_pretty_names.get(k, k): v for k, v in kmers_per_tf.items()
+    }
+    tfs_per_kmer = {
+        treatments_pretty_names.get(k, k): v for k, v in tfs_per_kmer.items()
+    }
     print("Generating 'Active k-mers per TF' plot...")
     plot_combined_histograms(
         distributions=kmers_per_tf,

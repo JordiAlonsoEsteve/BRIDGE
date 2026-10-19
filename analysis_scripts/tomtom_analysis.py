@@ -142,9 +142,7 @@ def _process_treatment(
     ic_df = pd.DataFrame(list(ic_distribution.items()), columns=["TF", "IC"])
     ic_df.to_csv(f"{input_dir}/ic_distribution.csv", index=False)
 
-    print(
-        f"[{base_result_dir}] Generated PWM for {treatment}, TFs: {len(PWM_dict)}"
-    )
+    print(f"[{base_result_dir}] Generated PWM for {treatment}, TFs: {len(PWM_dict)}")
 
     # Map PWMs to UniProt
     PWM_dict_mapped = {}
@@ -185,9 +183,7 @@ def _process_treatment(
             tomtom_df["Query_ID"].map(id_to_gene).fillna(tomtom_df["Query_ID"])
         )
         tomtom_df["Target_Gene_ID"] = (
-            tomtom_df["Target_ID"]
-            .map(id_to_gene)
-            .fillna(tomtom_df["Target_ID"])
+            tomtom_df["Target_ID"].map(id_to_gene).fillna(tomtom_df["Target_ID"])
         )
 
         # 2. Map Names and Families (primary lookup via Gene_ID, fallback to UniProt_AC)
@@ -240,13 +236,9 @@ def run_organism_pipeline(
     family_mapping = pd.read_table(tf_list_path, sep="\t")
 
     # Create dictionary mappings (Gene_ID based and UniProt_AC based)
-    gene_to_uniprot_mapping = dict(
-        zip(mapping["Gene_id"], mapping["UniProt_AC"])
-    )
+    gene_to_uniprot_mapping = dict(zip(mapping["Gene_id"], mapping["UniProt_AC"]))
     gene_to_name_mapping = dict(zip(mapping["Gene_id"], mapping["Motif_Name"]))
-    uniprot_to_name_mapping = dict(
-        zip(mapping["UniProt_AC"], mapping["Motif_Name"])
-    )
+    uniprot_to_name_mapping = dict(zip(mapping["UniProt_AC"], mapping["Motif_Name"]))
 
     gene_to_family_mapping = dict(
         zip(family_mapping["Gene_ID"], family_mapping["Family"])
@@ -278,9 +270,7 @@ def run_organism_pipeline(
     ]
 
     num_cores = min(len(treatments), cpu_count())
-    print(
-        f"Spawning {num_cores} parallel worker processes for {organism_name}..."
-    )
+    print(f"Spawning {num_cores} parallel worker processes for {organism_name}...")
 
     with Pool(processes=num_cores) as pool:
         results = pool.starmap(_process_treatment, task_args)
@@ -322,7 +312,8 @@ if __name__ == "__main__":
             "tf_list_path": "data/raw/dna_human38/TF_list.txt",
             "treatments": ["TabulaSapiens", "GTX", "PMBC_CPTT", "TCGA"],
             "strict_mapping": False,
-        }]
-        
+        },
+    ]
+
     for config in workflows:
         run_organism_pipeline(**config)

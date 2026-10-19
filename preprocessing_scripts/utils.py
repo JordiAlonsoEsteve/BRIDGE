@@ -41,6 +41,7 @@ def median_of_ratios_normalization(counts: pd.DataFrame) -> pd.DataFrame:
 
     return normalized_counts
 
+
 def process_counts_log2FC(counts: pd.DataFrame, average_treatments=False, clipping=4):
     # Uses the control per sample to normalize the data
     counts = counts.dropna(axis=0, how="any")  # axis=0 means rows
@@ -99,6 +100,7 @@ def process_counts_log2FC(counts: pd.DataFrame, average_treatments=False, clippi
     print(f"Final shape, {counts.shape}")
     return counts
 
+
 def merge_data(conts_list: list[pd.DataFrame]) -> pd.DataFrame:
     """
     Merge a list of DataFrames on their index, reporting number of rows lost.
@@ -127,6 +129,7 @@ def merge_data(conts_list: list[pd.DataFrame]) -> pd.DataFrame:
     print(f"Final merged DataFrame shape: {merged.shape}")
     return merged
 
+
 def to_TPM(counts: pd.DataFrame, gene_length: pd.DataFrame) -> pd.DataFrame:
     # Divide counts by gene length in kilobases
     gene_length_kb = gene_length / 1000
@@ -144,6 +147,7 @@ def to_TPM(counts: pd.DataFrame, gene_length: pd.DataFrame) -> pd.DataFrame:
     # Apply log1p transformation
     tpm_counts = np.log1p(tpm_counts)
     return tpm_counts
+
 
 def to_CPTT(counts: pd.DataFrame):
     # Step 1: Compute the total counts per cell

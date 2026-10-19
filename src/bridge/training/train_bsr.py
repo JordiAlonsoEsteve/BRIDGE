@@ -171,7 +171,7 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
             dtype=jnp.float64,
         )
         Theta = BSR_full_model.fit()
-        
+
         # Save active count stats
         num_active_motifs = (Theta[1:, :] != 0).any(axis=1).sum()
         num_active_tfs = (Theta[:, 1:] != 0).any(axis=0).sum()

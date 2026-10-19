@@ -200,16 +200,15 @@ def add_all_genes(gene_families_url: str, gene_names: list):
 
 if __name__ == "__main__":
     generate_gene_families(
-       "data/processed/regulation/ath/TAIR10_pep_20110103_representative_gene_model",
-       "data/processed/regulation/ath/blast_output",
-       "data/processed/regulation/ath",
-       "data/raw/dna_tair10/gene_families.csv",
+        "data/processed/regulation/ath/TAIR10_pep_20110103_representative_gene_model",
+        "data/processed/regulation/ath/blast_output",
+        "data/processed/regulation/ath",
+        "data/raw/dna_tair10/gene_families.csv",
     )
 
     generate_gene_families(
-       "data/processed/regulation/human/my_Homo_sapiens.GRCh38.pep.all.fa",
-       "data/processed/regulation/human//blast_output",
-       "data/processed/regulation/human/",
-       "data/raw/dna_human38/gene_families.csv",
+        "data/processed/regulation/human/my_Homo_sapiens.GRCh38.pep.all.fa",
+        "data/processed/regulation/human//blast_output",
+        "data/processed/regulation/human/",
+        "data/raw/dna_human38/gene_families.csv",
     )
-    

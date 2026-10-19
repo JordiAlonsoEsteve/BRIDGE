@@ -81,8 +81,9 @@ def substitute_jaspar_with_uniprot(meme_in, meme_out, mapping_txt):
 
             fout.write(line)
 
+
 if __name__ == "__main__":
-        
+
     build_mapping(
         "data/processed/regulation/human/JASPAR2026_CORE_vertebrates_non-redundant_pfms_meme.txt",
         "data/processed/regulation/human/JASPAR-UNIPROT.txt",
@@ -94,9 +95,9 @@ if __name__ == "__main__":
     )
 
     build_mapping(
-            "data/processed/regulation/ath/JASPAR2026_CORE_plants_non-redundant_pfms_meme.txt",
-            "data/processed/regulation/ath/JASPAR-UNIPROT.txt",
-        )
+        "data/processed/regulation/ath/JASPAR2026_CORE_plants_non-redundant_pfms_meme.txt",
+        "data/processed/regulation/ath/JASPAR-UNIPROT.txt",
+    )
     substitute_jaspar_with_uniprot(
         "data/processed/regulation/ath/JASPAR2026_CORE_plants_non-redundant_pfms_meme.txt",
         "data/processed/regulation/ath/JASPAR2026_CORE_plants_non-redundant_pfms_meme_uniprot.txt",

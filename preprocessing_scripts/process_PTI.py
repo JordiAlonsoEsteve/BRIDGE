@@ -1,5 +1,6 @@
-from utils import median_of_ratios_normalization, process_counts_log2FC, to_CPTT, to_TPM
 import pandas as pd
+from utils import median_of_ratios_normalization, process_counts_log2FC, to_TPM
+
 
 def handle_PTI(file_path):
     X = pd.read_csv(file_path, index_col=0)
@@ -49,9 +50,7 @@ def handle_PTI(file_path):
 
 
 if __name__ == "__main__":
-    counts = handle_PTI(
-        "data/raw/rna_seq_ath/PTI/PRJEB25079_UncorrectedCounts.csv"
-    )
+    counts = handle_PTI("data/raw/rna_seq_ath/PTI/PRJEB25079_UncorrectedCounts.csv")
     tpm_counts = to_TPM(
         counts=counts.copy(),
         gene_length=pd.read_table(

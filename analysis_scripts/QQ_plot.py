@@ -7,11 +7,15 @@ def reverse_complement_seq(seq: str) -> str:
     """Returns the reverse complement of a DNA/IUPAC consensus sequence."""
     if not isinstance(seq, str):
         return ""
-    
+
     complement = {
-        'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C',
+        "A": "T",
+        "T": "A",
+        "C": "G",
+        "G": "C",
     }
     return "".join(complement.get(base, base) for base in reversed(seq))
+
 
 def qq_plot_hits_comparison(df_dict, out_folder, suffix=""):
     """
@@ -92,7 +96,7 @@ def qq_plot_hits_comparison(df_dict, out_folder, suffix=""):
                 motif = reverse_complement_seq(str(motif))
 
             # Formatted label string
-            label_text = f"{query_id}-{motif}"#-{target_id}"
+            label_text = f"{query_id}-{motif}"  # -{target_id}"
 
             t = ax.text(
                 exp_log[j],
@@ -160,6 +164,7 @@ def qq_plot_hits_comparison(df_dict, out_folder, suffix=""):
     plt.savefig(f"{out_folder}/qq_plot_comparison{suffix}.png", dpi=300)
 
     return processed_dfs
+
 
 def qq_plot_all(df_dict, out_folder, suffix=""):
     """
@@ -232,24 +237,24 @@ def qq_plot_all(df_dict, out_folder, suffix=""):
         )
 
         # Labels for top 2 hits
-       # for j in range(min(2, len(subset))):
-            #query_id = subset.iloc[j]["Query_Name"]
-            #target_id = subset.iloc[j]["Target_ID"]
-            #motif = subset.iloc[j]["Query_consensus"]
+    # for j in range(min(2, len(subset))):
+    # query_id = subset.iloc[j]["Query_Name"]
+    # target_id = subset.iloc[j]["Target_ID"]
+    # motif = subset.iloc[j]["Query_consensus"]
 
-            ## Formatted label string
-            #label_text = f"{query_id}-{motif}-{target_id}"
+    ## Formatted label string
+    # label_text = f"{query_id}-{motif}-{target_id}"
 
-            #t = ax.text(
-                #exp_log[j],
-                #obs_log[j],
-                #label_text,
-                #fontsize=8,
-                #fontweight="medium",
-                #color="black",
-                #zorder=5,
-            #)
-            #texts.append(t)
+    # t = ax.text(
+    # exp_log[j],
+    # obs_log[j],
+    # label_text,
+    # fontsize=8,
+    # fontweight="medium",
+    # color="black",
+    # zorder=5,
+    # )
+    # texts.append(t)
 
     # Axis Limits & Identity Line
     max_val = max(max(all_obs_log), max(all_exp_log)) if all_obs_log else 1
@@ -306,6 +311,7 @@ def qq_plot_all(df_dict, out_folder, suffix=""):
     plt.savefig(f"{out_folder}/qq_plot_all{suffix}.png", dpi=300)
 
     return processed_dfs
+
 
 def qq_plot_family_comparison(df_dict, out_folder, suffix=""):
     """
@@ -378,25 +384,25 @@ def qq_plot_family_comparison(df_dict, out_folder, suffix=""):
         )
 
         # Labels for top 2 hits
-       # for j in range(min(2, len(subset))):
-            #family = subset.iloc[j]["Query_Family"]
-            #target_name = subset.iloc[j]["Target_Name"]
-            #query_id = subset.iloc[j]["Query_Name"]
-            #motif = subset.iloc[j]["Query_consensus"]
+    # for j in range(min(2, len(subset))):
+    # family = subset.iloc[j]["Query_Family"]
+    # target_name = subset.iloc[j]["Target_Name"]
+    # query_id = subset.iloc[j]["Query_Name"]
+    # motif = subset.iloc[j]["Query_consensus"]
 
-            ## Updated formatted label string to reflect the Family context
-            #label_text = f"[{family}] {query_id}-{motif}-{target_name}"
+    ## Updated formatted label string to reflect the Family context
+    # label_text = f"[{family}] {query_id}-{motif}-{target_name}"
 
-            #t = ax.text(
-                #exp_log[j],
-                #obs_log[j],
-                #label_text,
-                #fontsize=8,
-                #fontweight="medium",
-                #color="black",
-                #zorder=5,
-            #)
-            #texts.append(t)
+    # t = ax.text(
+    # exp_log[j],
+    # obs_log[j],
+    # label_text,
+    # fontsize=8,
+    # fontweight="medium",
+    # color="black",
+    # zorder=5,
+    # )
+    # texts.append(t)
 
     # Axis Limits & Identity Line
     max_val = max(max(all_obs_log), max(all_exp_log)) if all_obs_log else 1
@@ -432,13 +438,13 @@ def qq_plot_family_comparison(df_dict, out_folder, suffix=""):
     ax.set_xlabel(r"Expected $-\log_{10}(P)$", fontsize=12, labelpad=10)
     ax.set_ylabel(r"Observed $-\log_{10}(P)$", fontsize=12, labelpad=10)
 
-    #ax.legend(
+    # ax.legend(
     #    loc="lower right",
     #    frameon=False,
     #    fontsize=10,
     #    markerscale=1.2,
     #    handletextpad=0.2,
-    #)
+    # )
 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
