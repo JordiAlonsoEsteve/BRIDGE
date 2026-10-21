@@ -260,11 +260,11 @@ These computed results can be found at ...
 With that, is just a matter of running the TOMTOM and plotting.
 
 ```bash
-python analysis/tomtom_analysis.py
-python analysis/QQ_plot.py
-python analysis/motif_plots.py
-python analysis/prioritization.py
-python analysis/comparison_main_interaction.py
+python analysis_scripts/tomtom_analysis.py
+python analysis_scripts/QQ_plot.py
+python analysis_scripts/motif_plots.py
+python analysis_scripts/prioritization.py
+python analysis_scripts/comparison_main_interaction.py
 python analysis_scripts/tf-kmer_histograms.py
 ```
 

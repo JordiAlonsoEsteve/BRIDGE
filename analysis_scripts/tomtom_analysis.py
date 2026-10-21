@@ -12,10 +12,7 @@ from bridge.motif.motif_construction import (
     generate_PWM_from_theta,
 )
 
-# ==========================================================
-# UNIPROT / GENE ID RESOLUTION HELPER
-# ==========================================================
-# Creates a local SQLite + file cache in .uniprot_cache folder
+
 cache = Cache(".uniprot_cache")
 
 

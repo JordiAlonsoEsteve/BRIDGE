@@ -4,7 +4,7 @@ from adjustText import adjust_text
 
 
 def reverse_complement_seq(seq: str) -> str:
-    """Returns the reverse complement of a DNA/IUPAC consensus sequence."""
+    """Returns the reverse complement of a DNA consensus sequence."""
     if not isinstance(seq, str):
         return ""
 
@@ -18,13 +18,6 @@ def reverse_complement_seq(seq: str) -> str:
 
 
 def qq_plot_hits_comparison(df_dict, out_folder, suffix=""):
-    """
-    Final publication version:
-    - Multiple DataFrames compared
-    - Top 2 hits labeled with Target_ID and Motif
-    - Visual evaluation based on deviation from the diagonal
-    - AdjustText for non-overlapping labels
-    """
 
     # Global Style Settings
     plt.rcParams["font.family"] = "sans-serif"
@@ -167,14 +160,6 @@ def qq_plot_hits_comparison(df_dict, out_folder, suffix=""):
 
 
 def qq_plot_all(df_dict, out_folder, suffix=""):
-    """
-    Final publication version:
-    - Multiple DataFrames compared
-    - Top 2 hits labeled with Target_ID and Motif
-    - Visual evaluation based on deviation from the diagonal
-    - AdjustText for non-overlapping labels
-    """
-
     # Global Style Settings
     plt.rcParams["font.family"] = "sans-serif"
     plt.rcParams["pdf.fonttype"] = 42
