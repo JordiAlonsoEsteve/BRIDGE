@@ -7,7 +7,7 @@ import seaborn as sns
 def load_mappings():
     """Loads and cleans the ID-to-symbol mappings for both organisms."""
     # Arabidopsis mapping
-    ath_mapping = pd.read_csv("data/processed/regulation/Ath/Ath_id_mapping.csv")
+    ath_mapping = pd.read_csv("data/processed/regulation/ath/Ath_id_mapping.csv")
     gene_to_symbol_ath = {
         str(k).lower(): min(str(v).split(","), key=len)
         for k, v in zip(ath_mapping["Gene_id"], ath_mapping["symbol"])

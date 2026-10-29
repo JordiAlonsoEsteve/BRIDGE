@@ -264,7 +264,7 @@ if __name__ == "__main__":
                 "PB_snRNA_hormone_log2FC",
                 "PB_snRNA_hormone_CPTT",
             ],
-            "target_meme": "data/processed/regulation/Ath/JASPAR2026_CORE_plants_non-redundant_pfms_meme_uniprot.txt",
+            "target_meme": "data/processed/regulation/ath/JASPAR2026_CORE_plants_non-redundant_pfms_meme_uniprot.txt",
         },
         "human": {
             "treatments": ["TabulaSapiens", "GTX", "PMBC_CPTT", "TCGA"],

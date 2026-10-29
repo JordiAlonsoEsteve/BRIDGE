@@ -43,6 +43,10 @@ Download the DNA:
 ```bash
 wget -O data/raw/dna_human38/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz https://ftp.ensembl.org/pub/release-112/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 gunzip data/raw/dna_human38/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+# Make the chromosome naming stuff consistent
+awk '/^>/ { sub(/^>/, ""); sub(/^chr/, "Chr", $1); if ($1 !~ /^Chr/) $1 = "Chr" $1; print ">" $0; next } { print }' data/raw/dna_human38/Homo_sapiens.GRCh38.dna.primary_assembly.fa > data/raw/dna_human38/my_dna.fa
+rm data/raw/dna_human38/Homo_sapiens.GRCh38.dna.primary_assembly.fa
+mv data/raw/dna_human38/my_dna.fa data/raw/dna_human38/Homo_sapiens.GRCh38.dna.primary_assembly.fa
 ```
 Download the annotation:
 ```bash
@@ -148,7 +152,7 @@ python preprocessing_scripts/process_GTEx.py
 Yields log(TPM) GTEx
 ##### PBMC
 ```bash
-mkdir data/raw/rna_seq_human/PMBC
+mkdir -p data/raw/rna_seq_human/PMBC
 wget -O data/raw/rna_seq_human/PMBC/filtered_feature_bc_matrix.tar.gz https://cf.10xgenomics.com/samples/cell-exp/4.0.0/SC3_v3_NextGem_SI_PBMC_10K/SC3_v3_NextGem_SI_PBMC_10K_filtered_feature_bc_matrix.tar.gz
 tar -xzf data/raw/rna_seq_human/PMBC/filtered_feature_bc_matrix.tar.gz -C  data/raw/rna_seq_human/PMBC/
 rm data/raw/rna_seq_human/PMBC/filtered_feature_bc_matrix.tar.gz
