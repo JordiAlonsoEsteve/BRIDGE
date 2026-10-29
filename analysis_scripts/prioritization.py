@@ -388,16 +388,18 @@ def get_combined_correlation_data_family():
 
     ath_treatments = [
         "PTI_TPM",
-        "leaf_CPTT",
         "all_hormone_TPM",
         "PTI_log2FC",
+        "leaf_CPTT",
         "all_hormone_log2FC",
+        "PB_snRNA_hormone_log2FC",
+        "PB_snRNA_hormone_CPTT",
     ]
     for treatment in ath_treatments:
         corr = get_prioritization_correlation_Ath_family(treatment)
         records.append({"Dataset": treatment, "Organism": "Arabidopsis", **corr})
 
-    human_treatments = ["PMBC_CPTT", "TabulaSapiens", "GTX", "TCGA"]
+    human_treatments = ["GTX", "TabulaSapiens", "PMBC_CPTT", "TCGA"]
     for treatment in human_treatments:
         corr = get_prioritization_correlation_human_family(treatment)
         records.append({"Dataset": treatment, "Organism": "Human", **corr})
@@ -488,163 +490,6 @@ def plot_combined_correlations(
         print(f"Saved combined correlation plot to: {save_path}")
 
 
-def print_overall_pooled_correlations():
-    """
-    Gathers raw data points across all datasets, pools them,
-    and computes the overall Pearson and Spearman correlations.
-    """
-    print("\n" + "=" * 60)
-    print("OVERALL POOLED CORRELATIONS (ALL DATASETS COMBINED)")
-    print("=" * 60)
-
-    ath_treatments = [
-        "PTI_TPM",
-        "leaf_CPTT",
-        "all_hormone_TPM",
-        "PTI_log2FC",
-        "all_hormone_log2FC",
-    ]
-    human_treatments = ["PMBC_CPTT", "TabulaSapiens", "GTX", "TCGA"]
-    datasets = [("Ath", t) for t in ath_treatments] + [
-        ("human", t) for t in human_treatments
-    ]
-
-    pooled_data = {
-        "Importance_Exact": [],
-        "Importance_Family": [],
-        "IC_Exact": [],
-        "IC_Family": [],
-    }
-
-    for org, treatment in datasets:
-        importances_path = f"results/{org}/{treatment}/parameter_importance.csv"
-        ic_path = f"results/{org}/{treatment}/ic_distribution.csv"
-        tomtom_path = f"results/{org}/{treatment}/tomtom_df.csv"
-        map_path = f"data/processed/regulation/{org}/JASPAR_UNIPROT_mapping.csv"
-
-        if not (
-            os.path.exists(importances_path)
-            and os.path.exists(tomtom_path)
-            and os.path.exists(map_path)
-        ):
-            continue
-
-        importances = pd.read_csv(importances_path)
-        tomtom_results = pd.read_csv(tomtom_path)
-        mapping = pd.read_csv(map_path)
-        gene_to_uniprot = dict(zip(mapping["Gene_id"], mapping["UniProt_AC"]))
-
-        # --- TOMTOM PROCESSING ---
-        # Exact Match
-        tt_exact = tomtom_results[
-            tomtom_results["Query_ID"] == tomtom_results["Target_ID"]
-        ].copy()
-        tt_exact["p-value"] = tt_exact["p-value"].replace(0, 1e-300)
-        tt_exact["-log10(p-value)"] = -np.log10(tt_exact["p-value"])
-
-        # Family Match
-        valid_tt_fam = tomtom_results.dropna(
-            subset=["Query_Family", "Target_Family"]
-        ).copy()
-        tt_fam_matches = valid_tt_fam[
-            valid_tt_fam["Query_Family"] == valid_tt_fam["Target_Family"]
-        ]
-        tt_fam = (
-            tt_fam_matches.groupby(["Query_ID", "Query_Family"])["p-value"]
-            .min()
-            .reset_index()
-        )
-        tt_fam["p-value"] = tt_fam["p-value"].replace(0, 1e-300)
-        tt_fam["-log10(p-value)"] = -np.log10(tt_fam["p-value"])
-
-        # --- IMPORTANCE PROCESSING ---
-        imp_base = importances.copy()
-        imp_base["Beta"] = imp_base["Beta"].abs()
-        imp_base = imp_base[imp_base["Parameter"].str.contains("-")].copy()
-        imp_base["Gene"] = imp_base["Parameter"].apply(lambda x: x.split("-")[0])
-
-        # Exact (using max)
-        imp_exact = imp_base.groupby("Gene")[["Importance", "Beta"]].max().reset_index()
-        imp_exact["UniProt_AC"] = imp_exact["Gene"].map(gene_to_uniprot)
-        pooled_data["Importance_Exact"].append(
-            pd.merge(
-                imp_exact,
-                tt_exact[["Query_ID", "-log10(p-value)"]],
-                left_on="UniProt_AC",
-                right_on="Query_ID",
-                how="inner",
-            )
-        )
-
-        # Family (using mean)
-        imp_fam = imp_base.groupby("Gene")[["Importance", "Beta"]].mean().reset_index()
-        imp_fam["UniProt_AC"] = imp_fam["Gene"].map(gene_to_uniprot)
-        pooled_data["Importance_Family"].append(
-            pd.merge(
-                imp_fam,
-                tt_fam[["Query_ID", "-log10(p-value)"]],
-                left_on="UniProt_AC",
-                right_on="Query_ID",
-                how="inner",
-            )
-        )
-
-        # --- IC PROCESSING ---
-        if os.path.exists(ic_path):
-            ic_df = pd.read_csv(ic_path)
-            ic_df["UniProt_AC"] = ic_df["TF"].map(gene_to_uniprot)
-            ic_df = ic_df.dropna(subset=["UniProt_AC"])
-
-            pooled_data["IC_Exact"].append(
-                pd.merge(
-                    ic_df,
-                    tt_exact[["Query_ID", "-log10(p-value)"]],
-                    left_on="UniProt_AC",
-                    right_on="Query_ID",
-                    how="inner",
-                )
-            )
-            pooled_data["IC_Family"].append(
-                pd.merge(
-                    ic_df,
-                    tt_fam[["Query_ID", "-log10(p-value)"]],
-                    left_on="UniProt_AC",
-                    right_on="Query_ID",
-                    how="inner",
-                )
-            )
-
-    # --- CALCULATE & PRINT RESULTS ---
-    configs = [
-        ("Importance vs Exact Tomtom", "Importance_Exact", "Importance"),
-        ("Importance vs Family Tomtom", "Importance_Family", "Importance"),
-        ("IC vs Exact Tomtom", "IC_Exact", "IC"),
-        ("IC vs Family Tomtom", "IC_Family", "IC"),
-    ]
-
-    for name, key, col in configs:
-        if not pooled_data[key]:
-            continue
-
-        combined = pd.concat(pooled_data[key], ignore_index=True)
-        combined = combined.dropna(subset=[col, "-log10(p-value)"])
-
-        if len(combined) < 2:
-            continue
-
-        pearson_corr, pval_pearson = pearsonr(
-            combined[col], combined["-log10(p-value)"]
-        )
-        spearman_corr, pval_spearman = spearmanr(
-            combined[col], combined["-log10(p-value)"]
-        )
-
-        print(f"{name} (n = {len(combined)}):")
-        print(f"  Pearson:  r = {pearson_corr:7.4f}, p = {pval_pearson:.4e}")
-        print(f"  Spearman: r = {spearman_corr:7.4f}, p = {pval_spearman:.4e}\n")
-    print("=" * 60 + "\n")
-
-
 if __name__ == "__main__":
 
     # IC
@@ -697,6 +542,3 @@ if __name__ == "__main__":
         df=combined_family_df,
         save_path="results/combined_prioritization_correlations_family.png",
     )
-
-    # Print overall combined dataset statistics
-    print_overall_pooled_correlations()
