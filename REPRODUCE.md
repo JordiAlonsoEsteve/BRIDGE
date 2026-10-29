@@ -34,13 +34,9 @@ gunzip data/raw/dna_araport11/Araport11_GFF3_genes_transposons.20250813.gff.gz
 ```
 
 #### Human
-Generate the folder:
-
-```bash
-mkdir data/raw/dna_human38
-```
 Download the DNA:
 ```bash
+mkdir -p data/raw/dna_human38
 wget -O data/raw/dna_human38/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz https://ftp.ensembl.org/pub/release-112/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 gunzip data/raw/dna_human38/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 # Make the chromosome naming stuff consistent
@@ -177,7 +173,7 @@ gunzip data/raw/dna_tair10/TF_list.txt.gz
 cp data/raw/dna_tair10/TF_list.txt data/raw/dna_araport11/TF_list.txt
 ```
 
-For human, download from https://guolab.wchscu.cn/AnimalTFDB4/#/Download and save it in data/raw/dna_human38/TF_list_raw.txt. Now, some formatting;
+For human, download the "TF list" from https://guolab.wchscu.cn/AnimalTFDB4/#/Download and save it in data/raw/dna_human38/TF_list_raw.txt. Now, some formatting;
 
 ```bash
 awk -F'\t' 'NR==1{print "TF_ID\tGene_ID\tFamily"; next} {
