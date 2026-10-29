@@ -193,13 +193,11 @@ rm data/raw/dna_human38/TF_list_raw.txt
 ### Gene families
 Download the protein sequences:
 ```bash
-mkdir -p data/processed/regulation/ath
 wget -O data/processed/regulation/ath/TAIR10_pep_20110103_representative_gene_model https://www.arabidopsis.org/api/download-files/download?filePath=Proteins/TAIR10_protein_lists/TAIR10_pep_20110103_representative_gene_model
 
 
 ```
 ```bash
-mkdir -p data/processed/regulation/human
 wget -O data/processed/regulation/human/Homo_sapiens.GRCh38.pep.all.fa.gz https://ftp.ensembl.org/pub/current_fasta/homo_sapiens/pep/Homo_sapiens.GRCh38.pep.all.fa.gz
 gunzip data/processed/regulation/human/Homo_sapiens.GRCh38.pep.all.fa.gz
 ```

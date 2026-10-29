@@ -1,11 +1,22 @@
 # Data
 b_subtilis
-results*
-*data*/
 demo/*.csv
-!data/.gitkeep
-results/
+_data
+results/*
 !results/.gitkeep
+
+data/*
+!data/.gitkeep
+!data/processed/
+data/processed/*
+!data/processed/regulation/
+data/processed/regulation/*
+!data/processed/regulation/ath/
+!data/processed/regulation/human/
+data/processed/regulation/ath/*
+data/processed/regulation/human/*
+!data/processed/regulation/ath/*.csv
+!data/processed/regulation/human/*.csv
 # Cached
 .uniprot_cache/
 # Byte-compiled / optimized / DLL files

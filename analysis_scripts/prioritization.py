@@ -242,17 +242,17 @@ def get_correlation_IC_family(
 
 
 def get_prioritization_correlation_Ath(treatment):
-    importances = pd.read_csv(f"results/Ath/{treatment}/parameter_importance.csv")
-    tomtom_results = pd.read_csv(f"results/Ath/{treatment}/tomtom_df.csv")
-    mapping = pd.read_csv("data/processed/regulation/Ath/JASPAR_UNIPROT_mapping.csv")
+    importances = pd.read_csv(f"results/ath/{treatment}/parameter_importance.csv")
+    tomtom_results = pd.read_csv(f"results/ath/{treatment}/tomtom_df.csv")
+    mapping = pd.read_csv("data/processed/regulation/ath/JASPAR_UNIPROT_mapping.csv")
     gene_to_uniprot_mapping = dict(zip(mapping["Gene_id"], mapping["UniProt_AC"]))
     return get_correlation(importances, tomtom_results, gene_to_uniprot_mapping)
 
 
 def get_prioritization_correlation_Ath_family(treatment):
-    importances = pd.read_csv(f"results/Ath/{treatment}/parameter_importance.csv")
-    tomtom_results = pd.read_csv(f"results/Ath/{treatment}/tomtom_df.csv")
-    mapping = pd.read_csv("data/processed/regulation/Ath/JASPAR_UNIPROT_mapping.csv")
+    importances = pd.read_csv(f"results/ath/{treatment}/parameter_importance.csv")
+    tomtom_results = pd.read_csv(f"results/ath/{treatment}/tomtom_df.csv")
+    mapping = pd.read_csv("data/processed/regulation/ath/JASPAR_UNIPROT_mapping.csv")
     gene_to_uniprot_mapping = dict(zip(mapping["Gene_id"], mapping["UniProt_AC"]))
     return get_family_correlation(importances, tomtom_results, gene_to_uniprot_mapping)
 
@@ -274,9 +274,9 @@ def get_prioritization_correlation_human_family(treatment):
 
 
 def get_prioritization_correlation_IC_Ath(treatment):
-    IC_contents = pd.read_csv(f"results/Ath/{treatment}/ic_distribution.csv")
-    tomtom_results = pd.read_csv(f"results/Ath/{treatment}/tomtom_df.csv")
-    mapping = pd.read_csv("data/processed/regulation/Ath/JASPAR_UNIPROT_mapping.csv")
+    IC_contents = pd.read_csv(f"results/ath/{treatment}/ic_distribution.csv")
+    tomtom_results = pd.read_csv(f"results/ath/{treatment}/tomtom_df.csv")
+    mapping = pd.read_csv("data/processed/regulation/ath/JASPAR_UNIPROT_mapping.csv")
     gene_to_uniprot_mapping = dict(zip(mapping["Gene_id"], mapping["UniProt_AC"]))
     return get_correlation_IC(IC_contents, tomtom_results, gene_to_uniprot_mapping)
 
@@ -290,9 +290,9 @@ def get_prioritization_correlation_IC_human(treatment):
 
 
 def get_prioritization_correlation_IC_Ath_family(treatment):
-    IC_contents = pd.read_csv(f"results/Ath/{treatment}/ic_distribution.csv")
-    tomtom_results = pd.read_csv(f"results/Ath/{treatment}/tomtom_df.csv")
-    mapping = pd.read_csv("data/processed/regulation/Ath/JASPAR_UNIPROT_mapping.csv")
+    IC_contents = pd.read_csv(f"results/ath/{treatment}/ic_distribution.csv")
+    tomtom_results = pd.read_csv(f"results/ath/{treatment}/tomtom_df.csv")
+    mapping = pd.read_csv("data/processed/regulation/ath/JASPAR_UNIPROT_mapping.csv")
     gene_to_uniprot_mapping = dict(zip(mapping["Gene_id"], mapping["UniProt_AC"]))
     return get_correlation_IC_family(
         IC_contents, tomtom_results, gene_to_uniprot_mapping
@@ -315,9 +315,9 @@ def get_combined_correlation_data():
 
     ath_treatments = [
         "PTI_TPM",
-        "leaf_CPTT",
         "all_hormone_TPM",
         "PTI_log2FC",
+        "leaf_CPTT",
         "all_hormone_log2FC",
         "PB_snRNA_hormone_log2FC",
         "PB_snRNA_hormone_CPTT",
@@ -326,7 +326,7 @@ def get_combined_correlation_data():
         corr = get_prioritization_correlation_Ath(treatment)
         records.append({"Dataset": treatment, "Organism": "Arabidopsis", **corr})
 
-    human_treatments = ["PMBC_CPTT", "TabulaSapiens", "GTX", "TCGA"]
+    human_treatments = ["GTX", "TabulaSapiens", "PMBC_CPTT", "TCGA"]
     for treatment in human_treatments:
         corr = get_prioritization_correlation_human(treatment)
         records.append({"Dataset": treatment, "Organism": "Human", **corr})
@@ -340,10 +340,12 @@ def get_combined_correlation_data_IC():
 
     ath_treatments = [
         "PTI_TPM",
-        "leaf_CPTT",
         "all_hormone_TPM",
         "PTI_log2FC",
+        "leaf_CPTT",
         "all_hormone_log2FC",
+        "PB_snRNA_hormone_log2FC",
+        "PB_snRNA_hormone_CPTT",
     ]
     for treatment in ath_treatments:
         corr = get_prioritization_correlation_IC_Ath(treatment)
