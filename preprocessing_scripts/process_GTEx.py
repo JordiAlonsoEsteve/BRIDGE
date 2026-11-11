@@ -1,34 +1,45 @@
 import os
-os.environ["POLARS_MAX_THREADS"] = "10" # memory issues...
-os.environ["POLARS_VERBOSE"] = "1"   # Polars' own internal logging (stderr)
+import time
+import numpy as np
 import polars as pl
-import polars.selectors as cs
-print(pl.thread_pool_size())  # should print 10; if it says 128, the setting didn't apply
-# 1. Load and process the massive GTEx file
-x = (
-    pl.read_csv(
-        "data/raw/rna_seq_human/GTEx/GTEx.gct",
-        separator="\t",
-        skip_rows=2,
-    )
-    # Create the Unique_name column using fast string expressions
-    .with_columns(pl.col("Name").str.split(".").list.get(0).alias("Unique_name"))
-    # Drop the unneeded columns
-    .drop(["Name", "Description"])
-    # Group by the new column and sum all numeric columns
-    .group_by("Unique_name").sum()
-    # Drop any rows containing missing/null values
-    .drop_nulls()
-)
-x = x.with_columns(cs.numeric().log1p().cast(pl.Float32))
 
-# 3. Sort by your gene index column
-x = x.sort("Unique_name")
-# change that to Gene_ID
-x = x.rename({"Unique_name": "Gene_ID"})
+PATH_IN = "data/raw/rna_seq_human/GTEx/GTEx.gct"
+PATH_OUT = "data/processed/mRNA/human/GTX_TPM.csv"
+WRITE_STEP = 2000   # rows per CSV write batch
 
-# 4. SAVE AS PARQUET (The final piece)
-x.write_csv(
-    "data/processed/mRNA/human/GTX_TPM.csv",
-    float_precision=3,  # <-- Only writes 3 decimal places (e.g., 0.693) to the text file
+t0 = time.time()
+acc = {}   # Gene_ID (version stripped) -> float64 vector; duplicates (e.g. PAR_Y) get summed
+
+with open(PATH_IN) as f:
+    f.readline()                      # "#1.2"
+    f.readline()                      # dims line
+    header = f.readline().rstrip("\n").split("\t")
+    samples = header[2:]              # skip Name, Description
+    print(f"{len(samples)} samples", flush=True)
+
+    for n, line in enumerate(f):
+        fields = line.rstrip("\n").split("\t")
+        gid = fields[0].split(".")[0]
+        vals = np.array(fields[2:], dtype=np.float64)
+        if gid in acc:
+            acc[gid] += vals
+        else:
+            acc[gid] = vals
+        if n % 2000 == 0:
+            print(f"[{time.time() - t0:6.0f}s] row {n}", flush=True)
+
+genes = sorted(acc)
+mat = np.empty((len(genes), len(samples)), dtype=np.float32)
+for i, g in enumerate(genes):
+    mat[i] = np.log1p(acc.pop(g))     # sum first, then log1p, same as your original order
+print(f"[{time.time() - t0:6.0f}s] matrix built: {mat.shape}", flush=True)
+
+df = pl.from_numpy(mat, schema=samples, orient="row").insert_column(
+    0, pl.Series("Gene_ID", genes)
 )
+
+os.makedirs(os.path.dirname(PATH_OUT), exist_ok=True)
+with open(PATH_OUT, "wb") as out:
+    for i in range(0, df.height, WRITE_STEP):
+        df.slice(i, WRITE_STEP).write_csv(out, include_header=(i == 0), float_precision=3)
+        print(f"[{time.time() - t0:6.0f}s] wrote {min(i + WRITE_STEP, df.height)}/{df.height}", flush=True)
