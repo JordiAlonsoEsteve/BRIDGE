@@ -22,7 +22,7 @@ Before starting, ensure the following tools are installed:
 1. Clone the repository
 2. (Recommended) Create and activate a virtual environment. For example:
 ```bash
-conda create -n bridge python=3.11 -y
+conda create -n bridge python=3.12 -y
 conda activate bridge
 ```
 3. Install the package in editable mode
