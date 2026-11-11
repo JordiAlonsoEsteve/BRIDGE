@@ -29,6 +29,7 @@ dependencies = [
     "optuna>=4.0",
     "scanpy>=1.12.1",
     "igraph==1.0.0",
+    "markov-clustering",
 ]
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
