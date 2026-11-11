@@ -1,9 +1,9 @@
 import polars as pl
 import polars.selectors as cs
 
-# 1. Load and process the massive GTEx file
+# 1. Use scan_csv instead of read_csv for lazy evaluation (prevents OOM)
 x = (
-    pl.read_csv(
+    pl.scan_csv(
         "data/raw/rna_seq_human/GTEx/GTEx.gct",
         separator="\t",
         skip_rows=2,
@@ -16,16 +16,18 @@ x = (
     .group_by("Unique_name").sum()
     # Drop any rows containing missing/null values
     .drop_nulls()
+    .with_columns(cs.numeric().log1p().cast(pl.Float32))
+    # Sort by your gene index column
+    .sort("Unique_name")
+    # Rename to Gene_ID
+    .rename({"Unique_name": "Gene_ID"})
 )
-x = x.with_columns(cs.numeric().log1p().cast(pl.Float32))
 
-# 3. Sort by your gene index column
-x = x.sort("Unique_name")
-# change that to Gene_ID
-x = x.rename({"Unique_name": "Gene_ID"})
+# 2. Evaluate/collect the lazy DataFrame into memory
+df_final = x.collect()
 
-# 4. SAVE AS PARQUET (The final piece)
-x.write_csv(
-    "data/processed/mRNA/human/GTX_TPM.csv",
-    float_precision=3,  # <-- Only writes 3 decimal places (e.g., 0.693) to the text file
+# 3. SAVE AS PARQUET (As mentioned in your comment)
+df_final.write_parquet(
+    "data/processed/mRNA/human/GTX_TPM.parquet",
+    compression="zstd"  # Highly efficient compression for genomic data
 )
