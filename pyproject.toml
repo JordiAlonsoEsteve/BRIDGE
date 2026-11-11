@@ -10,7 +10,7 @@ authors = [
     { name="Jordi Alonso Esteve", email="j.alonsoesteve@uva.nl" }
 ]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = "==3.12.12"
 
 dependencies = [
     "numpy>=2.0",
@@ -27,8 +27,9 @@ dependencies = [
     "biopython>=1.83",
     "jax[cuda13]",
     "optuna>=4.0",
-    "scanpy>=1.11.5",
+    "scanpy==1.12.1",
     "igraph==1.0.0",
+    "celltypist==1.7.1"
 ]
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
