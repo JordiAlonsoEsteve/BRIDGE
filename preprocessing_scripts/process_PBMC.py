@@ -31,9 +31,6 @@ sc.pp.normalize_total(adata, target_sum=1e4)
 # 3. Log-transform the data (almost always done immediately after CPTT/CPM normalization)
 sc.pp.log1p(adata)
 
-
-print(adata.obs["cell_type"].value_counts())
-
 df_cells_x_genes = pd.DataFrame(
     adata.X.toarray() if hasattr(adata.X, "toarray") else adata.X,
     index=adata.obs_names,
