@@ -1,7 +1,8 @@
-import polars as pl
-import polars.selectors as cs
 import os
 os.environ["POLARS_MAX_THREADS"] = "10"
+import polars as pl
+import polars.selectors as cs
+print(pl.thread_pool_size())  # should print 10; if it says 128, the setting didn't apply
 # 1. Load and process the massive GTEx file
 x = (
     pl.read_csv(
