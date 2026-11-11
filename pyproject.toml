@@ -27,6 +27,7 @@ dependencies = [
     "biopython>=1.83",
     "jax[cuda13]",
     "optuna>=4.0",
+    "scanpy>=1.11.5"
 ]
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]

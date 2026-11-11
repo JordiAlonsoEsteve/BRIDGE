@@ -142,7 +142,8 @@ This yields the log(CPTT) pseudo-bulk .csv for Tabula Sapiens.
 ##### GTEx
 ```bash
 mkdir data/raw/rna_seq_human/GTEx
-wget -O data/raw/rna_seq_human/GTEx/GTEx.gct https://storage.googleapis.com/adult-gtex/bulk-gex/v11/rna-seq/GTEx_Analysis_2026-05-19_v11_RNASeQCv2.4.3_gene_tpm.gct.gz
+wget -O data/raw/rna_seq_human/GTEx/GTEx.gct.gz https://storage.googleapis.com/adult-gtex/bulk-gex/v11/rna-seq/GTEx_Analysis_2026-05-19_v11_RNASeQCv2.4.3_gene_tpm.gct.gz
+gunzip data/raw/rna_seq_human/GTEx/GTEx.gct.gz
 python preprocessing_scripts/process_GTEx.py
 ```
 Yields log(TPM) GTEx

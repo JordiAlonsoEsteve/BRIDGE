@@ -18,24 +18,24 @@ from bridge.utils.utils import (
 
 # Configuration for all pipeline runs
 DATASET_CONFIGS = [
-    #{
-    #    # Arabidopsis Datasets
-    #    "names": [
-    #        "PTI_TPM",
-    #        "leaf_CPTT",
-    #        "all_hormone_TPM",
-    #        "PTI_log2FC",
-    #        "all_hormone_log2FC",
-    #    ],
-    #    "dna_folder": "data/raw/dna_tair10",
-    #    "results_dir": "results/ath",
-    #},
-    ## Another arabidopsis dataset but that is mapped using Araport11 ...
-    #{
-    #    "names": ["PB_snRNA_hormone_log2FC", "PB_snRNA_hormone_CPTT"],
-    #    "dna_folder": "data/raw/dna_araport11",
-    #    "results_dir": "results/ath",
-    #},
+    {
+        # Arabidopsis Datasets
+        "names": [
+            "PTI_TPM",
+            "leaf_CPTT",
+            "all_hormone_TPM",
+            "PTI_log2FC",
+            "all_hormone_log2FC",
+        ],
+        "dna_folder": "data/raw/dna_tair10",
+        "results_dir": "results/ath",
+    },
+    # Another arabidopsis dataset but that is mapped using Araport11 ...
+    {
+        "names": ["PB_snRNA_hormone_log2FC", "PB_snRNA_hormone_CPTT"],
+        "dna_folder": "data/raw/dna_araport11",
+        "results_dir": "results/ath",
+    },
     # Human Datasets
     {
         "names": ["PMBC_CPTT", "TabulaSapiens", "GTX", "TCGA"],
@@ -74,7 +74,6 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
             DNA_folder=config["dna_folder"],
             DNA_params=DNA_PARAMS,
         )
-        import pdb; pdb.set_trace()
         get_scale_distribution(
             Y, plot_path=os.path.join(output_dir, "scale_distribution.png")
         )
