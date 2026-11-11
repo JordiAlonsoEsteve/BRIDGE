@@ -1,13 +1,13 @@
 import polars as pl
 import polars.selectors as cs
-
+import os
+os.environ["POLARS_MAX_THREADS"] = "10"
 # 1. Load and process the massive GTEx file
 x = (
     pl.read_csv(
         "data/raw/rna_seq_human/GTEx/GTEx.gct",
         separator="\t",
         skip_rows=2,
-        n_threads=8,
     )
     # Create the Unique_name column using fast string expressions
     .with_columns(pl.col("Name").str.split(".").list.get(0).alias("Unique_name"))
