@@ -27,9 +27,8 @@ dependencies = [
     "biopython>=1.83",
     "jax[cuda13]",
     "optuna>=4.0",
-    "scanpy==1.12.1",
+    "scanpy>=1.12.1",
     "igraph==1.0.0",
-    "celltypist==1.7.1"
 ]
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]

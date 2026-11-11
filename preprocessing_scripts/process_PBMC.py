@@ -1,8 +1,6 @@
 import scanpy as sc
 import numpy as np
 import pandas as pd
-import celltypist
-from celltypist import models
 
 adata = sc.read_10x_mtx(
     "data/raw/rna_seq_human/PMBC/filtered_feature_bc_matrix/", var_names="gene_symbols"
@@ -33,25 +31,12 @@ sc.pp.normalize_total(adata, target_sum=1e4)
 # 3. Log-transform the data (almost always done immediately after CPTT/CPM normalization)
 sc.pp.log1p(adata)
 
-# 1. Convert the normalized sparse matrix to a dense format (if it's sparse)
-# 2. Extract into a pandas DataFrame (cells as rows, genes as columns)
-
-models.download_models()
-model = models.Model.load(model="Immune_All_Low.pkl")
-
-# 2. Predict cell types using your log-transformed data
-predictions = celltypist.annotate(
-    adata, model="Immune_All_Low.pkl", majority_voting=True
-)
-
-# 3. Add the predicted cell types back into your adata object
-adata.obs["cell_type"] = predictions.predicted_labels["majority_voting"]
 
 print(adata.obs["cell_type"].value_counts())
 
 df_cells_x_genes = pd.DataFrame(
     adata.X.toarray() if hasattr(adata.X, "toarray") else adata.X,
-    index=adata.obs_names + "_" + adata.obs["cell_type"].astype(str),
+    index=adata.obs_names,
     columns=adata.var["gene_ids"],  # This switches symbols to Ensembl IDs
 )
 
