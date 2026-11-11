@@ -7,4 +7,4 @@ X = pd.read_table(
 X.index = X.index.str.split(".").str[0]
 # make float32 to save space
 X = X.astype("float32")
-X.to_csv("data/processed/mRNA/human/TCGA_TPM.csv", float_format=3)
+X.to_csv("data/processed/mRNA/human/TCGA_TPM.csv", float_format="%.3f")
