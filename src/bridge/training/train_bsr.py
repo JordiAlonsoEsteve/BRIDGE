@@ -1,5 +1,7 @@
+import gc
 import os
 
+import jax
 import jax.numpy as jnp
 import numpy as np
 import pandas as pd
@@ -165,6 +167,10 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
         )
         X_test.to_csv(os.path.join(output_dir, "X_test.csv"))
 
+        del BSR_model, Y_hat
+        gc.collect()
+        jax.clear_caches()
+
         # Re-fit on Full Dataset
         BSR_full_model = BSR(
             X=X.values,
@@ -179,6 +185,7 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
         Theta = BSR_full_model.fit()
 
         # Compute and Store Training Performance on the Full Dataset
+        print("Computing training metrics on the full dataset...")
         Y_hat_full = BSR_full_model.predict(C.values, X.values)
         train_metrics = compute_metrics(Y.values, Y_hat_full)
         print(f"Full dataset training metrics: {train_metrics}")
@@ -186,7 +193,7 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
         pd.DataFrame([train_metrics]).to_csv(
             os.path.join(output_dir, "train_metrics.csv"), index=False
         )
-        
+
         #np.savez(
         #    os.path.join(output_dir, "train_predictions.npz"),
         #    Y_hat=Y_hat_full,
