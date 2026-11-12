@@ -63,6 +63,12 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
             if not main_effects_only
             else os.path.join(config["results_dir"] + "_main_only", treatment)
         )
+        # if train_metrics.csv exists, skip this treatment (we already ran it)
+        if os.path.exists(os.path.join(output_dir, "train_metrics.csv")):
+            print(
+                f"Skipping {treatment} (main_effects_only={main_effects_only}) as it was already ran. To re-run, delete the directory: {output_dir}"
+            )
+            continue
         os.makedirs(output_dir, exist_ok=True)
         print("Output directory created:", output_dir)
         print(f"\n{'='*20} Processing dataset: {treatment} {'='*20}")

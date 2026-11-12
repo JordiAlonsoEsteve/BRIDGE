@@ -8,9 +8,7 @@ df = pl.read_csv(
 
 # 2. Clean the gene names (assuming the first column is the gene index)
 gene_col = df.columns[0]
-df = df.with_columns(
-    pl.col(gene_col).str.split(".").list.get(0).alias(gene_col)
-)
+df = df.with_columns(pl.col(gene_col).str.split(".").list.get(0).alias(gene_col))
 
 # 3. Cast numeric columns to float32 to save memory
 numeric_cols = [c for c in df.columns if c != gene_col]

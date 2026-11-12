@@ -106,7 +106,9 @@ if __name__ == "__main__":
     )
     # log 2FC
     PB_counts_mr = median_of_ratios_normalization(PB_counts)
-    PB_counts_log2FC = process_counts_log2FC(PB_counts_mr, average_treatments=False, clipping=4)
+    PB_counts_log2FC = process_counts_log2FC(
+        PB_counts_mr, average_treatments=False, clipping=4
+    )
     PB_counts_log2FC.to_csv("data/processed/mRNA/ath/PB_snRNA_hormone_log2FC.csv")
 
     # Also to CPTT
