@@ -104,10 +104,12 @@ if __name__ == "__main__":
     PB_counts = handle_PB_snRNA_hormone(
         "data/raw/rna_seq_ath/SN_hormone/pseudobulk_hormone_counts.csv"
     )
-    PB_counts = median_of_ratios_normalization(PB_counts)
-    PB_counts = process_counts_log2FC(PB_counts, average_treatments=False, clipping=4)
-    PB_counts.to_csv("data/processed/mRNA/ath/PB_snRNA_hormone_log2FC.csv")
+    # log 2FC
+    PB_counts_mr = median_of_ratios_normalization(PB_counts)
+    PB_counts_log2FC = process_counts_log2FC(PB_counts_mr, average_treatments=False, clipping=4)
+    PB_counts_log2FC.to_csv("data/processed/mRNA/ath/PB_snRNA_hormone_log2FC.csv")
 
     # Also to CPTT
     PB_counts_CPTT = to_CPTT(PB_counts)
     PB_counts_CPTT.to_csv("data/processed/mRNA/ath/PB_snRNA_hormone_CPTT.csv")
+    nan_row_count = PB_counts_CPTT.isna().any(axis=1).sum()
