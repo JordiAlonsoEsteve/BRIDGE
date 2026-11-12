@@ -72,12 +72,16 @@ class BSR:
         max_iter=50_000,
         tol=5e-5,
         dtype=jnp.float32,
-        main_effects_C=True,
-        main_effects_X=True,
         main_effects_only=False,
         proximal_operator="soft_thresholding",  # or "elite_lasso"
         mask=None,  # boolean array. If true, 0.
     ):
+        '''
+        The model assumes that the intercepts are NOT included in the input matrices C and X.
+        It will include intercepts internally. The fitting process is constructed for that setting
+        and not penalizing the main intercept, which is assumed to be in (0,0) position of the Theta matrix 
+        and always present.
+        '''
         self.dtype = dtype
         # Transform to jax arrays
         self.X = jnp.array(X)
@@ -98,6 +102,12 @@ class BSR:
         n = self.C.shape[0]  # number of samples
         p = self.X.shape[1]  # number of features / TFs
 
+        # Do not expose this because it will be inconsisten 
+        # with stuff below. The model assumes that
+        # the intercepts are NOT included in the input matrices C and X
+        # and they are added internally
+        main_effects_C=True,
+        main_effects_X=True,
         # Add main-effect column to C
         if main_effects_C:
             self.C = jnp.hstack([jnp.ones((n, 1), dtype=dtype), self.C])
