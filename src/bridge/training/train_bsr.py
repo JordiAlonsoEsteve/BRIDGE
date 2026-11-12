@@ -185,22 +185,23 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
         Theta = BSR_full_model.fit()
 
         # Compute and Store Training Performance on the Full Dataset
-        print("Computing training metrics on the full dataset...")
-        Y_hat_full = BSR_full_model.predict(C.values, X.values)
-        train_metrics = compute_metrics(Y.values, Y_hat_full)
-        print(f"Full dataset training metrics: {train_metrics}")
+        if not main_effects_only:
+            print("Computing training metrics on the full dataset...")
+            Y_hat_full = BSR_full_model.predict(C.values, X.values)
+            train_metrics = compute_metrics(Y.values, Y_hat_full)
+            print(f"Full dataset training metrics: {train_metrics}")
 
-        pd.DataFrame([train_metrics]).to_csv(
-            os.path.join(output_dir, "train_metrics.csv"), index=False
-        )
+            pd.DataFrame([train_metrics]).to_csv(
+                os.path.join(output_dir, "train_metrics.csv"), index=False
+            )
 
-        #np.savez(
-        #    os.path.join(output_dir, "train_predictions.npz"),
-        #    Y_hat=Y_hat_full,
-        #    Y_true=Y.values,
-        #)
+            #np.savez(
+            #    os.path.join(output_dir, "train_predictions.npz"),
+            #    Y_hat=Y_hat_full,
+            #    Y_true=Y.values,
+            #)
 
-        # Save active count stats
+            # Save active count stats
         num_active_motifs = (Theta[1:, :] != 0).any(axis=1).sum()
         num_active_tfs = (Theta[:, 1:] != 0).any(axis=0).sum()
         with open(os.path.join(output_dir, "num_active.txt"), "w") as f:
