@@ -186,11 +186,12 @@ def run_pipeline(config: dict, main_effects_only: bool = False) -> None:
         pd.DataFrame([train_metrics]).to_csv(
             os.path.join(output_dir, "train_metrics.csv"), index=False
         )
-        np.savez(
-            os.path.join(output_dir, "train_predictions.npz"),
-            Y_hat=Y_hat_full,
-            Y_true=Y.values,
-        )
+        
+        #np.savez(
+        #    os.path.join(output_dir, "train_predictions.npz"),
+        #    Y_hat=Y_hat_full,
+        #    Y_true=Y.values,
+        #)
 
         # Save active count stats
         num_active_motifs = (Theta[1:, :] != 0).any(axis=1).sum()
