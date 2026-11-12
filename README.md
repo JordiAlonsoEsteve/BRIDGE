@@ -1,4 +1,3 @@
-![Python](https://img.shields.io/badge/python-3.10+-blue)
 # 🧬 Bilinear Regulatory Inference from DNA and Gene Expression (BRIDGE) 🧬
 Predict transcription factor binding motifs de novo from RNA-seq
 
