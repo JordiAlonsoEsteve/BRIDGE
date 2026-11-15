@@ -30,6 +30,8 @@ dependencies = [
     "scanpy>=1.12.1",
     "igraph==1.0.0",
     "markov-clustering",
+    "logomaker",
+    "adjustText"
 ]
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
