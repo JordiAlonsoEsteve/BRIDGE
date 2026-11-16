@@ -5,21 +5,28 @@ demo/*.csv
 _data
 results/*
 !results/.gitkeep
-
 data/*
 !data/.gitkeep
 !data/processed/
+!data/raw/
 data/processed/*
+data/raw/*
+
 !data/processed/regulation/
-data/processed/regulation/*
 !data/processed/regulation/ath/
 !data/processed/regulation/human/
 data/processed/regulation/ath/*
 data/processed/regulation/human/*
 !data/processed/regulation/ath/*.csv
 !data/processed/regulation/human/*.csv
+
+!data/raw/dna_tair10/
+!data/raw/dna_human38/
+data/raw/dna_tair10/*
+data/raw/dna_human38/*
 !data/raw/dna_tair10/TF_list.txt
 !data/raw/dna_human38/TF_list.txt
+
 # Cached
 .uniprot_cache/
 # Byte-compiled / optimized / DLL files
