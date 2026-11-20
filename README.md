@@ -99,3 +99,5 @@ generate_meme_file(PWM_dict, meme_path="demo/motifs.meme")
 
 ## 📊 Manuscript's figure reproduction
 See [`REPRODUCE.md`](REPRODUCE.md) for full instructions (data download, preprocessing, and per-figure scripts).
+
+[![DOI](https://zenodo.org/badge/1373172445.svg)](https://doi.org/10.5281/zenodo.24399265)
